@@ -1,0 +1,24 @@
+{% import "post_with_subtitle.html" as macros %}
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="page_header">All Available Tags</h1>
+
+<div class="tag_list">
+{% for term in terms | sort(attribute="pages") | reverse %}
+  <div>
+    <div class="tag_heading">
+      <span class="tag tag--active">{{term.name}}</span>
+      ({{term.pages | length}} post{{ term.pages | length | pluralize }})
+    </div>
+    <ul class="posts_list">
+    {% for page in term.pages %}
+      {{ macros::post_with_subtitle(page=page) }}
+    {% endfor %}
+    </ul>
+  </div>
+{% endfor %}
+</div>
+
+{% endblock content %}
