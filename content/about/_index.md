@@ -1,6 +1,7 @@
 +++
 title = "About"
 template =  "about.html"
+date = "2021-03-02"
 +++
 
 Hi, I'm Florian! :wave:
