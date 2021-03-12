@@ -2,7 +2,7 @@
 title = "React Hooks are Tricky"
 date = "2019-07-15"
 [taxonomies]
-tags=["react"]
+tags=["react", "javascript"]
 +++
 
 When hooks were first introduced, many people thought that they looked a bit magical. Especially the rule that the order of hooks must not change across renders received a lot of pushback. On the other hand, getting rid of the divide between class based and functional components, and making sharing of functionality between components easier, seemed really appealing. That was especially true for me, since I saw them as an opportunity to stop using `recompose` for absolutely everything in our codebase at work.

@@ -8,5 +8,6 @@ pkgs.mkShell {
     shellcheck
     shfmt
     zola
+    nodePackages.prettier
   ];
 }
