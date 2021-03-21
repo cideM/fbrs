@@ -2,4 +2,7 @@
 public
 tags
 .envrc
+<<<<<<< HEAD
 .direnv
+=======
+>>>>>>> f85e777 (gitignore)
