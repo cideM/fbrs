@@ -2,7 +2,7 @@
 title = "Prefer Higher Order Component for Branching Logic"
 date = "2020-08-09"
 [taxonomies]
-tags=["react"]
+tags=["react", "javascript"]
 +++
 
 Hooks have taken the React world by storm and they're here to stay whether you like it or not. I can understand the appeal of their simplicity since it's hard to be more concise than `const [foo, setFoo] = useState()`. But there are use cases where I think that higher-order component (HOC) fare better than hooks and one of them is _branching logic_.
