@@ -6,7 +6,18 @@
 
   outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = nixpkgs.legacyPackages.${system}; in
+      let pkgs = import nixpkgs {
+        inherit system;
+        overlays = [
+          (super: self: {
+            zola = self.zola.overrideAttrs
+              (old: {
+                buildInputs = old.buildInputs ++ [ pkgs.libsass ];
+              });
+          })
+        ];
+      };
+      in
       rec {
         devShell = pkgs.mkShell
           {
