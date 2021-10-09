@@ -55,7 +55,7 @@ implement any mission critical functionality myself (encryption, database
 communication, routing, and so on).
 
 On the other hand, one of the biggest time sinks was mere plumbing. Many
-Haskell libraries invent little domain specific languages (DSL), and
+Haskell libraries invent little domain specific languages (DSL)[^1], and
 translating between them turned out to be really tedious.
 
 Haskell also has its fair share of historical baggage, which includes, but is
@@ -180,7 +180,7 @@ with each other can also be the source of great frustration. If you want to do
 logging in the HTTP handler and maybe also make use of another DSL for
 propagating application configuration (`ReaderT` pattern for those Haskellers)
 and yet another for inversion-of-control
-([capability](https://github.com/tweag/capability)[^1] or just use `mtl` for
+([capability](https://github.com/tweag/capability)[^2] or just use `mtl` for
 that too) then you need to write some non-trivial plumbing code for that. [Half
 of this
 file](https://github.com/cideM/lions-backend/blob/c97365af6b44ef122f1df45e66dc7ded870b4a18/backend/src/Wai.hs)
@@ -328,7 +328,7 @@ it's expressive and concise. But it took me a lot of experimenting to get there
 and also required writing [some
 utility](https://github.com/cideM/lions-backend/blob/770f3e481ee0a7fed27742d0cd8d5f050acfcbfb/backend/src/Error.hs)
 functions for translating between various DSLs, again. There are more things I
-could complain about here[^2], but I hope that my main point here is clear:
+could complain about here[^3], but I hope that my main point here is clear:
 translating a simple pattern, early return, to Haskell, without making
 the code untolerably ugly, is not straight forward and it can be hard to find
 this kind of advice in tutorials and books.
@@ -384,7 +384,7 @@ three categories: developer environment, building parts of the application,
 building and deploying the NixOS image that runs on a digital ocean droplet.
 
 I can't think of a better way to provide all the tools necessary to work with a
-project than Nix. Every new project I start uses Nix[^3] to provide
+project than Nix. Every new project I start uses Nix[^4] to provide
 instructions for how to create a shell that includes things like compiler,
 formatter, database tools, terraform, and so on. In combination with
 [direnv.net](direnv.net/) whenever I `cd` into such a project my shell
@@ -527,12 +527,16 @@ maintenance down the road. But getting there takes a long time.
 
 ---
 
-[^1]: I experimented with that library and found it surprisingly straight
+[^1]: I'm using the term DSL very liberally here. Talking about Monads might
+  just scare people off or confuse them, if they're not already with Haskell or
+  a similar language.
+
+[^2]: I experimented with that library and found it surprisingly straight
   forward to include. But because I wasn't making use of most of its effects
   and instead only needed a simple way of threading some configuration values
   through various functions, I ended up removing it again.
 
-[^2]: For example, I would strongly recommend to immediately catch potential
+[^3]: For example, I would strongly recommend to immediately catch potential
   exceptions thrown by a function that has `MonadThrow` (if I recall
   correctly), because I've had surprising errors when the exception type was
   not what I thought, because somewhere a function happened to have a
@@ -541,4 +545,4 @@ maintenance down the road. But getting there takes a long time.
   short-circuiting but I was actually just returning `IO Left` instead of
   `Left`. So this `mtl`-style control flow is not without its pitfalls.
 
-[^3]: More specifically a Nix Flake
+[^4]: More specifically a Nix Flake
