@@ -55,8 +55,13 @@ implement any mission critical functionality myself (encryption, database
 communication, routing, and so on).
 
 On the other hand, one of the biggest time sinks was mere plumbing. Many
-Haskell libraries invent little domain specific languages (DSL)[^1], and
-translating between them turned out to be really tedious.
+Haskell libraries revolve around specific Monads, created just for that
+library. You don't need to know what monads are for this blog post, but the
+gist is that you often need to write a little bit of glue code, so that
+different monads of different libraries can talk to each other. I'll write more
+about this later. But the end result was I spent way more time on glue code
+than I thought. To make things worse, this glue code did not feel like
+meaningful progress. It's a Haskell solution for a Haskell problem after all.
 
 Haskell also has its fair share of historical baggage, which includes, but is
 not limited to, an annoying module system, complicated tooling, and a rather
@@ -91,7 +96,7 @@ to [Litestream](https://litestream.io/) for database backups.
 ### PureScript
 
 I've written 140 lines of PureScript (PS) code in this project, which is
-nothing.  It's used for progressive enhancement of markup rendered on the
+nothing. It's used for progressive enhancement of markup rendered on the
 server, which means inserting DOM elements and interactivity into existing DOM
 nodes. Unfortunately I couldn't find any good libraries for this, so I had to
 resort to writing very verbose and tedious code that looks like a one-to-one
@@ -111,17 +116,19 @@ though.
 
 Haskell the language is really not complicated. But the ecosystem can be. I
 frequently found myself spending too much time solving problems that only exist
-in Haskell. These problems are usually the result of having to combine DSLs
-from different libraries, something I alluded to already in the summary.  For
-example, I struggled
-[quite](https://www.reddit.com/r/haskell/comments/jyzc3w/how_to_avoid_infinite_type_when_lifting/)
-a bit with logging, which has only ever happened once before, in Clojure, where
+in Haskell. These problems are usually the result of having to combine custom
+Monads (which you can think of as small, domain specific languages) from
+different libraries, something I alluded to already in the summary. For
+example, I struggled [quite a
+bit](https://www.reddit.com/r/haskell/comments/jyzc3w/how_to_avoid_infinite_type_when_lifting/)
+with logging, which has only ever happened once before, in Clojure, where
 logging is [the final
 frontier](https://lambdaisland.com/blog/2020-06-12-logging-in-clojure-making-sense-of-the-mess).
-But let me explain in a bit more detail why logging can be surprisingly tricky
-and what I mean by DSL.
+But let me explain in a bit more detail why logging can be surprisingly tricky.
 
-Here's a snippet from the README of [scotty](https://hackage.haskell.org/package/scotty), a well known web framework:
+Here's a snippet from the README of
+[scotty](https://hackage.haskell.org/package/scotty), a well known web
+framework:
 
 ```haskell
 main = scotty 3000 $
@@ -135,9 +142,9 @@ at `param "word"`, or, applying the function `param` to the string `"word"`.
 Maybe you can guess that this extracts the value of the route parameter we
 defined in the preceding line, with `"/:word"`. But isn't it weird that we're
 not also passing the HTTP request to the `param` function? Where does it get
-the _request_ paramter from, then?  The answer is too complicated for this blog
+the _request_ paramter from, then? The answer is too complicated for this blog
 post, but suffice it to say that there's some magic going on behind the scenes.
-And this magic is made possible by the Scotty DSL!
+And this magic is made possible by the Scotty Monad.
 
 Now, what if you want to also do some logging in your HTTP handlers? There's a
 really nice library called
@@ -171,60 +178,47 @@ the `newLogger` variable is nowhere to be seen. You might at first glance think
 that we're passing an anonymous function to `katipAddNamespace` (the `$ do`
 part maybe?), but even if that were the case, we're clearly not accepting any
 arguments in that anonymous function. So what happens to the modified logger?
-Well, the answer is, it's complicated. Just like with Scotty, there's a DSL
+Well, the answer is, it's complicated. Just like with Scotty, there's a custom Monad
 that takes care of all this plumbing for us behind the scenes.
 
-If the stars align, these DSLs allow you write very concise and expressive code
-that's also type safe, because Haskell. But getting different DSLs to agree
-with each other can also be the source of great frustration. If you want to do
-logging in the HTTP handler and maybe also make use of another DSL for
-propagating application configuration (`ReaderT` pattern for those Haskellers)
-and yet another for inversion-of-control
-([capability](https://github.com/tweag/capability)[^2] or just use `mtl` for
-that too) then you need to write some non-trivial plumbing code for that. [Half
-of this
-file](https://github.com/cideM/lions-backend/blob/c97365af6b44ef122f1df45e66dc7ded870b4a18/backend/src/Wai.hs)
-and [the entirety of this
-file](https://github.com/cideM/lions-backend/blob/c97365af6b44ef122f1df45e66dc7ded870b4a18/backend/src/Error.hs)
-in my application exist only to translate between different DSLs. And that's on
-top of the various libraries out there that already try to help with that task.
-[Here I asked a question on
-Reddit](https://www.reddit.com/r/haskell/comments/krke1o/how_to_create_colog_instance_for_scotty/)
-about this very problem, and also asked on [StackOverflow
-(SO)](https://stackoverflow.com/questions/65599741/how-to-make-co-logs-withlog-work-with-scotty),
-where someone suggested the following, untested code:
+Of course the logger and its contexts and namespaces need to live somewhere. In
+a typical setup you create a record that holds your application environment.
+And in that environment you store the logger. You then need to teach Katip how
+it can access and modify the logger in that environment. It's essentially like
+implementing an interface for a struct, if you're a Go person.
 
-```haskell
-data AppEnv = AppEnv
-  { appLogAction :: LogAction App Message
-  , actLogAction :: LogAction (ActionT TL.Text App) Message
-  }
+But then you also need to teach Scotty about this custom Monad. Instead of
+working with
+[`Web.Scotty`](https://hackage.haskell.org/package/scotty-0.12/docs/Web-Scotty.html)
+you import
+[`Web.Scotty.Trans`](https://hackage.haskell.org/package/scotty-0.12/docs/Web-Scotty-Trans.html),
+which states in its opening paragraph:
 
-instance HasLog AppEnv Message App where
-  getLogAction = appLogAction
-  setLogAction newact env = env { appLogAction = newact }
+> The functions in this module allow an arbitrary monad to be embedded in
+> Scotty's monad transformer stack in order that Scotty be combined with other
+> DSLs.
 
-instance HasLog AppEnv Message (ActionT TL.Text App) where
-  getLogAction = actLogAction
-  setLogAction newact env = env { actLogAction = newact }
-```
+Which is exactly what I wanted to do. And at this point the whole house of
+cards may or may not fall apart. Because custom Monads often come with
+constraints. As in, if you want to run this custom Monad you need to make sure
+that the context in which it runs supplies X, Y and Z. And then you start
+wondering how those constraints will fit into the bigger picture of all the
+other custom Monads you need to satisfy. For Scotty and Katip this ended up
+being not too
+[crazy](https://www.reddit.com/r/haskell/comments/jyzc3w/how_to_avoid_infinite_type_when_lifting/),
+but for another library -- `co-log` -- I was unable to achieve my goal at all.
+If this whole paragraph sounds a bit hand-wavy, please check out [this Reddit
+question](https://www.reddit.com/r/haskell/comments/krke1o/how_to_create_colog_instance_for_scotty/)
+[and this StackOverflow
+(SO)](https://stackoverflow.com/questions/65599741/how-to-make-co-logs-withlog-work-with-scotty)
+post.
 
-The snippet tries to mediate between a custom DSL for my application
-configuration and the `co-log` logging library. One of the `co-log` maintainers
-was nice enough to help with this, after I created an issue on GitHub. [Their
-solution](https://github.com/cideM/co_log_issue/pull/1/files) is pretty
-straight foward, but I wasn't too happy with it, since it creates some coupling
-between my application environment and the logging. I'm sure there are even
-better solutions that I'm just not aware of, but the lengths I went through to
-introduce this logging library into my application is something I never
-encountered, might not even have thought possible, in many other language
-ecosystems.
+So yes, Haskell can be concise, expressive and type safe. But getting there can
+be a pain, at least in the beginning. I do believe that over time this stops
+being a problem, as you get more and more familiar with the Haskell type system
+and the ecosystem.
 
-Many libraries in the Haskell ecosystem advertise two different aspects:
-expressiveness and type safety. In my **personal experience**, the first is
-highly overrated, the second is what you actually want.
-
-Aside from DSLs, there was at least one other recurring topic that made me
+Aside from Monads, there was at least one other recurring topic that made me
 scratch my head, and that's how to deal with control flow and early return.
 
 Here's what 90% of my Go code looks like:
@@ -294,10 +288,10 @@ tricks](https://www.haskellforall.com/2021/05/the-trick-to-avoid-deeply-nested-e
 for dealing with this, but in **my personal experience** they often don't work
 in real world scenarios, where more complicated types are involved,
 particularly anything with `IO`. What does work is making liberal use of syntax
-sugar, combinators and mini-DSLs though.
+sugar, combinators and Monad transformers though.
 
-Here's a snippet I copied verbatim from my code base, which shows what such a
-DSL can look like:
+Here's a snippet I copied verbatim from my code base, which shows what the
+previous code looks like once you throw Monad transformers at the problem:
 
 ```haskell
 tok@Token {..} <- get value >>= E.note' (NotFound value)
@@ -327,8 +321,8 @@ also very little to no Go-style line noise about error checking. I dare say
 it's expressive and concise. But it took me a lot of experimenting to get there
 and also required writing [some
 utility](https://github.com/cideM/lions-backend/blob/770f3e481ee0a7fed27742d0cd8d5f050acfcbfb/backend/src/Error.hs)
-functions for translating between various DSLs, again. There are more things I
-could complain about here[^3], but I hope that my main point here is clear:
+functions for translating between various custom Monads, again. There are more things I
+could complain about here[^2], but I hope that my main point here is clear:
 translating a simple pattern, early return, to Haskell, without making
 the code untolerably ugly, is not straight forward and it can be hard to find
 this kind of advice in tutorials and books.
@@ -384,7 +378,7 @@ three categories: developer environment, building parts of the application,
 building and deploying the NixOS image that runs on a digital ocean droplet.
 
 I can't think of a better way to provide all the tools necessary to work with a
-project than Nix. Every new project I start uses Nix[^4] to provide
+project than Nix. Every new project I start uses Nix[^3] to provide
 instructions for how to create a shell that includes things like compiler,
 formatter, database tools, terraform, and so on. In combination with
 [direnv.net](direnv.net/) whenever I `cd` into such a project my shell
@@ -439,7 +433,7 @@ for backend services than I expected. It therefore took me longer than I wished
 to figure out how to pass credentials to my application, share a database
 directory between different Systemd services, which syntax goes where, and so
 on. If I wanted to debug things on MacOS I needed to build the image through
-Docker and then I also ended up running a QEMU VM through Docker.  You're
+Docker and then I also ended up running a QEMU VM through Docker. You're
 really on your own for a lot of these tasks and at some point I was tired of
 figuring out one thing only be the stuck on the next task.
 
@@ -527,22 +521,20 @@ maintenance down the road. But getting there takes a long time.
 
 ---
 
-[^1]: I'm using the term DSL very liberally here. Talking about Monads might
-  just scare people off or confuse them, if they're not already with Haskell or
-  a similar language.
+[^1]:
+    I experimented with that library and found it surprisingly straight
+    forward to include. But because I wasn't making use of most of its effects
+    and instead only needed a simple way of threading some configuration values
+    through various functions, I ended up removing it again.
 
-[^2]: I experimented with that library and found it surprisingly straight
-  forward to include. But because I wasn't making use of most of its effects
-  and instead only needed a simple way of threading some configuration values
-  through various functions, I ended up removing it again.
+[^2]:
+    For example, I would strongly recommend to immediately catch potential
+    exceptions thrown by a function that has `MonadThrow` (if I recall
+    correctly), because I've had surprising errors when the exception type was
+    not what I thought, because somewhere a function happened to have a
+    `MonadThrow` in its signature but with the exception type hardcoded to
+    string. I've also created subtle bugs in code where I thought I was
+    short-circuiting but I was actually just returning `IO Left` instead of
+    `Left`. So this `mtl`-style control flow is not without its pitfalls.
 
-[^3]: For example, I would strongly recommend to immediately catch potential
-  exceptions thrown by a function that has `MonadThrow` (if I recall
-  correctly), because I've had surprising errors when the exception type was
-  not what I thought, because somewhere a function happened to have a
-  `MonadThrow` in its signature but with the exception type hardcoded to
-  string. I've also created subtle bugs in code where I thought I was
-  short-circuiting but I was actually just returning `IO Left` instead of
-  `Left`. So this `mtl`-style control flow is not without its pitfalls.
-
-[^4]: More specifically a Nix Flake
+[^3]: More specifically a Nix Flake
