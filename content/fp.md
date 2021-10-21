@@ -19,24 +19,20 @@ into the static site. It worked but it was ugly.
 And so one day I decided that it was time for a rewrite! The official reason is
 that I considered it too risky to depend on Firebase for everything. Also the
 local developer experience was a bit lacking at that time. The honest answer is
-that, for quite a long time, I had been looking for a project that is small but
-not too small, has some semblance of a deadline, and actual users. Something
-that's close to what I do for a living as a web developer. Except that I would
-throw the full force of functional programming (FP) at that project. And so the idea
-was born to rewrite the entire website with Haskell, Nix and PureScript.
-Essentially I had an FP-shaped hammer and was looking for a nail.
-
-The project is something I did for a family member, so no money was involved.
-And I had a lot of freedom when it came to what features would get built. But
-since I'm unlikely to work professionally with functional programming
-technologies in the short and medium term future, it was as close to a real
-world project as it would get.
+that, for quite a long time, I had been looking for a real-world project to
+which I could apply all the fancy functional programming (FP) technologies I
+picked up over the years. I was holding an FP-shaped hammer and I was just
+looking for a suitable nail.  This project seemed perfect, since it's small,
+has actual users and even a deadline, but since it's a project for a family
+member there's no money on the line and I could do whatever I wanted in terms
+of tech. And so the idea was born to rewrite the entire website with Haskell,
+Nix and PureScript.
 
 In this post I want to share my experiences building this simple backend in
 Haskell, Nix and PureScript. You don't need to know any of these technologies
 to follow the blog post. You might not understand every little detail, but I
-hope that the overall message is still valuable. I'll also start the post with
-a short summary, so you don't have to read the entire article if you just want
+hope that the overall message is still valuable. I'll start the post with a
+short summary, so you don't have to read the entire article if you just want
 the main conclusions.
 
 ## Summary
@@ -56,9 +52,9 @@ communication, routing, and so on).
 
 On the other hand, one of the biggest time sinks was mere plumbing. Many
 Haskell libraries revolve around specific Monads, created just for that
-library. You don't need to know what monads are for this blog post, but the
+library. You don't need to know what Monads are for this blog post, but the
 gist is that you often need to write a little bit of glue code, so that
-different monads of different libraries can talk to each other. I'll write more
+different Monads of different libraries can talk to each other. I'll write more
 about this later. But the end result was I spent way more time on glue code
 than I thought. To make things worse, this glue code did not feel like
 meaningful progress. It's a Haskell solution for a Haskell problem after all.
@@ -88,29 +84,33 @@ For a website of this size that is insane.
 
 ### SQLite
 
-Yes, yes, yes! I love SQLite. It has quirks and historical baggage but at the
-end of the day it's a robust, battle tested and simple tool that I find to be a
-joy to use. You can easily spin up an in-memory database for unit tests, it
-comes with a surprising number of features, such as JSON tooling, and it's just
-a file at the end of day. This kind of simplicity is refreshing. Also shoutout
-to [Litestream](https://litestream.io/) for database backups.
+I love SQLite. It has quirks and historical baggage but at the end of the day
+it's a robust, battle tested and simple tool that I find to be a joy to use.
+You can easily spin up an in-memory database for unit tests, it comes with a
+surprising number of features, such as JSON tooling, and it's just a file at
+the end of day. This kind of simplicity is refreshing. Also shoutout to
+[Litestream](https://litestream.io/) for database backups.
+
+10/10 would use again.
 
 ### PureScript
 
 I've written 140 lines of PureScript (PS) code in this project, which is
 nothing. It's used for progressive enhancement of markup rendered on the
 server, which means inserting DOM elements and interactivity into existing DOM
-nodes. Unfortunately I couldn't find any good libraries for this, so I had to
-resort to writing very verbose and tedious code that looks like a one-to-one
+nodes. Unfortunately I couldn't find any good PS libraries for this, so I had
+to resort to writing very verbose and tedious code that looks like a one-to-one
 translation from Javascript. All of the PS web frameworks and libraries I saw
 want to own the markup they render, like React. So instead of surgically
 injecting interactivity into existing DOM elements, you hand control over an
-entire subtree of the DOM to PureScript. But that would have meant
-re-implementing the rendering in PS, which seemed like too much work.
+entire subtree of the DOM to PS. But that would have meant duplicating the
+rendering (first render with Haskell on the server then with PS on the client)
+of some routes in PS, which seemed like too much work.
 
 For this project PS was not a good choice, as it meant additional complexity
 and an unnecessarily large bundle for little to no gain. I like the language
-though.
+though. As such I just can't say if I would use PS again in the future based on
+this project alone.
 
 ## Deep Dive
 
@@ -143,7 +143,7 @@ It doesn't matter if you know Haskell or not. I'd like to direct your attention
 at `param "word"`, or, applying the function `param` to the string `"word"`.
 Maybe you can guess that this extracts the value of the route parameter we
 defined in the preceding line, with `"/:word"`. But isn't it weird that we're
-not also passing the HTTP request to the `param` function? Where does it get
+not passing the HTTP request to the `param` function? Where does it get
 the _request_ paramter from, then? The answer is too complicated for this blog
 post, but suffice it to say that there's some magic going on behind the scenes.
 And this magic is made possible by the Scotty Monad.
@@ -237,7 +237,7 @@ I actually don't mind it at all. The pattern is always the same, so it's very
 easy for me to follow the control flow inside a function. Additionally, it's
 trivial to return as early as possible. In fact, returning early is something
 most people probably don't even give a second thought to, since it's just so
-easy in imperative languages.
+easy in imperative languages with statements.
 
 What does the above look like in Haskell then?
 
@@ -266,28 +266,33 @@ results? Consider the following scenario:
 - Perform some business logic with user and database entity
 
 Pretty much all of these things can fail in some expected way (meaning
-exceptions wouldn't be appropriate).
+exceptions wouldn't be appropriate). Here's a snippet from an older commit that
+shows what such code could look like.
 
 ```haskell
-case param "foo" of
-  Nothing -> -- return early?
-  Just foo -> case isAuthorized user of
-                False -> -- return early?
-                True -> case talkToDatabase of
-                          Nothing -> -- return early?
-                          Just fooThing -> -- ...
+getTokenByValue dbConn token >>= \case
+  Nothing -> return $ Left $ TokenNotFound token
+  Just tok@Token {..} -> do
+    ok <- hasUser dbConn tokenUserId
+    if not ok
+      then (return . Left $ UserForTokenNotFound tokenUserId)
+      else do
+        now <- Time.getCurrentTime
+        if now >= tokenExpires
+          then return $ Left $ TokenExpired tok
+          else do undefined -- ...
 ```
 
 You can see where I'm going with this, right? The increasing indentation level
-looks ugly and it's unclear how we can actually return early since Haskell
-doesn't even have a return keyword in the traditional sense. The astute reader
-might even notice that the above code could not possibly compile.
-`talkToDatabase` won't return a simple `Either` type, rather it will return
-something more complicated -- `IO Either` -- but that's irrelevant here.
+looks ugly. In all fairness though, this isn't any more verbose than the
+equivalent Go or Typescript code. **I really wish that I had just stuck with
+the ugly and verbose version** instead of trying out various different
+patterns. I believe that this code is simple, and readable and very easy to
+understand. Refactoring this for vanity reasons is not something I'm proud of.
 
 There are [some
 tricks](https://www.haskellforall.com/2021/05/the-trick-to-avoid-deeply-nested-error.html)
-for dealing with this, but in **my personal experience** they often don't work
+for dealing with the ugliness, but in **my personal experience** they often don't work
 in real world scenarios, where more complicated types are involved,
 particularly anything with `IO`. What does work is making liberal use of syntax
 sugar, combinators and Monad transformers though.
@@ -296,12 +301,12 @@ Here's a snippet I copied verbatim from my code base, which shows what the
 previous code looks like once you throw Monad transformers at the problem:
 
 ```haskell
-tok@Token {..} <- get value >>= E.note' (NotFound value)
+token@Token {..} <- Token.get value >>= E.note' (NotFound value)
 ok <- User.exists tokenUserId
 E.unless ok $ E.throwError (NoUser tokenUserId)
 now <- liftIO $ Time.getCurrentTime
-E.when (now >= tokenExpires) (E.throwError $ Expired tok)
-return $ Valid tok
+E.when (now >= tokenExpires) (E.throwError $ Expired token)
+return $ Valid token
 ```
 
 This is probably illegible to folks who are not familiar with Haskell, so here's a hopefully human readable translation.
@@ -469,7 +474,7 @@ reveal the hidden "send email" button and inject a checkbox into every cell of
 the users table. Do not replace the entire users table with markup rendered on
 the client, because that would have meant reimplementing all of the markup in
 PS. Or figuring out a way of sharing my Haskell template code with PS, but that
-sounded like a lot of work. Unfortunately PureScript doesn't seem to have any
+sounded like a lot of work. Unfortunately PS doesn't seem to have any
 libraries that help with that kind of task. Most of its ecosystem seems to
 revolve around React-like libraries that want full control over a DOM node.
 
