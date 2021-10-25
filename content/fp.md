@@ -11,8 +11,15 @@ I built a website so trivial that you might wonder why I even bother writing
 about it. It consists of a static site which is, unfortunately, still built
 with Gatsby, a Javascript framework. The content comes from a content
 management system called Contentful. The most complex part is the members-only
-area, which is the part I rebuilt and what this post is all about. The first
-version was hacked together with Firebase and some serverless functions,
+area, which is the part I rebuilt and what this post is all about.
+
+The members area consists of a handful of routes:
+- A news feed where administrators can post new messages. It's plain text with the exception of URLs, which are replaced with proper anchor links. No images.
+- User management area, where administrators can invite new members or edit and delete existing members. Here you can also filter by user groups and send emails to users you select through checkboxes. That's the part where I used progressive enhancement. This route also hooks into email sending functionality for messaging someone who was invited to the site.
+- People can create events, and others can then sign up for these events and also indicate how many guests they bring. Everyone can see who's coming and who declined, how many guests there are in total. Events can also have attachements, such as PDF files, which are stored on the droplet itself.
+- People can request a link that let's them change their password.
+
+The first version was hacked together with Firebase and some serverless functions,
 because I didn't want to maintain a proper backend. The UI was awkwardly fit
 into the static site. It worked but it was ugly.
 
@@ -34,6 +41,8 @@ to follow the blog post. You might not understand every little detail, but I
 hope that the overall message is still valuable. I'll start the post with a
 short summary, so you don't have to read the entire article if you just want
 the main conclusions.
+
+Here's the [source code](https://github.com/cideM/lions-backend).
 
 ## Summary
 
