@@ -13,7 +13,7 @@ programming both job and favorite pastime.
 
 Since I'm a big fan of reproducible software and declarative configuration,
 most of my open source efforts now focus on the [NixOS
-organization](https://github.com/NixOS) which I'm a part of.
+organization](https://github.com/NixOS) of which I'm a part.
 
 ## Skills
 
