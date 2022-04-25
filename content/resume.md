@@ -9,7 +9,7 @@ I'm a physician turned software engineer with over 5 years of experience in
 building scalable web applications. My main area of expertise is back end
 services running in Kubernetes but I feel equally comfortable working on front
 end code or CLI tools. I'm self-taught and extremely driven, and consider
-programming both job and favorite pastime.
+programming both as a job and favorite pastime.
 
 Since I'm a big fan of reproducible software and declarative configuration,
 most of my open source efforts now focus on the [NixOS
@@ -64,7 +64,7 @@ organization](https://github.com/NixOS) of which I'm a part.
 ### US Expansion Founding Member & Co-Lead
 <div role="doc-subtitle">AMBOSS | 2015 - 2017</div>
 
-- Hire and integrate a completely new team of full- and part-time medical editors working both remotely and onsite
+- Hire and integrate a completely new team of full- and part-time medical editors working both remote and onsite
 - Invent new workflows for creating medical content
 - Market Analysis and project management
 - Develop didactic concepts tailored to new user needs
