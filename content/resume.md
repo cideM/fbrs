@@ -11,6 +11,10 @@ services running in Kubernetes but I feel equally comfortable working on front
 end code or CLI tools. I'm self-taught and extremely driven, and consider
 programming both job and favorite pastime.
 
+Since I'm a big fan of reproducible software and declarative configuration,
+most of my open source efforts now focus on the [NixOS
+organization](https://github.com/NixOS) which I'm a part of.
+
 ## Skills
 
 - Work with it every day: **Go, Docker, Kubernetes, Javascript, GraphQL**
