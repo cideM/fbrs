@@ -14,6 +14,8 @@
             buildInputs = with pkgs; [
               nixpkgs-fmt
               shellcheck
+              lua
+              pandoc
               shfmt
               zola
               nodePackages.prettier
