@@ -18,7 +18,7 @@ organization](https://github.com/NixOS) of which I'm a part.
 ## Skills
 
 - Work with it every day: **Go, Docker, Kubernetes, Javascript, GraphQL**
-- Could jump in and quickly get up to speed: Haskell, Lua, Nix
+- Could jump in and quickly get up to speed: Haskell, Lua, Nix, Typescript
 - Some familiarity: Rust, Clojure, Purescript
 
 ## Experience
@@ -46,6 +46,7 @@ organization](https://github.com/NixOS) of which I'm a part.
 - Maintain and build CI/CD pipelines
 - Actively involved in delivering features end-to-end (from early design to post-launch monitoring and success metrics) and across different product teams
 - Participate in and contribute to QA, front end, platform, and Golang guilds
+- Create a small Typescript application to progressively enhance WebViews on iOS and Android devices
 
 ### Frontend Engineer
 <div role="doc-subtitle">AMBOSS | 2018 - 2019</div>
