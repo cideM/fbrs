@@ -1,5 +1,6 @@
 $accent-color: #F17C67
 $page-top-margin: 1rem
+$border-radius: 5px
 
 html
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif
@@ -62,7 +63,7 @@ h3
   color: hsla(0, 0%, 0%, 0.7)
   padding: 0.1em 0.3em
   border: 1px solid hsla(0, 0%, 0%, 0.3)
-  border-radius: 5px
+  border-radius: $border-radius;
   &:hover
     border-color: $accent-color
     color: $accent-color
@@ -142,7 +143,7 @@ h3
 .post_toc
   padding: 1em
   border: 1px solid hsla(0, 0%, 0%, 0.2)
-  border-radius: 5px
+  border-radius: $border-radius;
 
   p
     text-align: center
@@ -155,7 +156,7 @@ h3
 
 .post_content pre
   padding: 0.5em
-  border-radius: 5px
+  border-radius: $border-radius;
   overflow: auto
 
 .post_content blockquote
@@ -202,3 +203,22 @@ nav
 hr
   border: 1px solid hsla(0, 0%, 0%, 0.8)
   border-bottom: none
+
+.posts_subtitle
+  font-size: 18px
+
+.other_posts
+  border: 1px solid hsla(0, 0%, 0%, 0.4)
+  border-radius: $border-radius
+  padding: 1rem 2rem
+  margin-bottom: 2rem
+
+  & h2
+    font-size: 1.2rem
+    margin: 0
+    margin-bottom: 0.5rem
+
+  & ul
+    margin: 0
+    padding: 0
+    list-style-position: inside
