@@ -12,8 +12,7 @@ end code or CLI tools. I'm self-taught and extremely driven, and consider
 programming both as a job and favorite pastime.
 
 Since I'm a big fan of reproducible software and declarative configuration,
-most of my open source efforts now focus on the [NixOS
-organization](https://github.com/NixOS) of which I'm a part.
+most of my open source efforts now focus on [Nix](https://github.com/NixOS).
 
 ## Skills
 
@@ -62,7 +61,7 @@ organization](https://github.com/NixOS) of which I'm a part.
 - Maintain and extend Javascript projects running in various environments (e.g., server-rendered templates, Angular single-page application, web views on mobile)
 - Introduce React components to legacy code
 
-### US Expansion Founding Member & Co-Lead
+### US Expansion Co-Lead
 <div role="doc-subtitle">AMBOSS | 2015 - 2017</div>
 
 - Hire and integrate a completely new team of full- and part-time medical editors working both remote and onsite
@@ -75,3 +74,8 @@ organization](https://github.com/NixOS) of which I'm a part.
 Doctor of Medicine, M.D.\
 University of Duesseldorf | 2007 - 2014
 
+## Languages
+
+- German: native
+- English: fluent
+- Japanese: extremely basic and working on it
