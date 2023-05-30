@@ -1,4 +1,0 @@
-#!/bin/sh
-cat ./content/resume.md \
-  | awk '/+++/ { COUNT += 1; next }; COUNT >= 2 { print $0 }' \
-  | pandoc --standalone --self-contained --from markdown --to html -o resume.html --metadata title="Florian Beeres" -c ./resume/style.css
