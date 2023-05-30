@@ -36,10 +36,6 @@
           {
             buildInputs = with pkgs; [
               alejandra
-              shellcheck
-              lua
-              pandoc
-              shfmt
               zola
               nodePackages.prettier
             ];
