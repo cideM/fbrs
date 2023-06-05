@@ -37,6 +37,7 @@
             buildInputs = with pkgs; [
               alejandra
               zola
+              imagemagick
               nodePackages.prettier
             ];
           };
