@@ -1,0 +1,12 @@
+{% set title = path | split(pat="/") | last | slugify %}
+<img src="{{ path }}"
+     alt="{{ alt }}"
+     srcset="{% for width in [400, 600, 1200] -%}
+       {% set image = resize_image(path=path, width=width, op="fit_width") -%}
+       {{ image.url }} {{ width }}w {%- if loop.last == false%},{% endif %}
+     {%- endfor -%}
+     "
+     sizes="(min-width: 800px) 50vw, 100vw"
+/>
+<p><a href="{{ path }}">Image in original size</a></p>
+
