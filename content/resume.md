@@ -61,7 +61,7 @@ most of my open source efforts now focus on [Nix](https://github.com/NixOS).
 - Maintain and extend Javascript projects running in various environments (e.g., server-rendered templates, Angular single-page application, web views on mobile)
 - Introduce React components to legacy code
 
-### US Expansion Co-Lead
+### US Expansion Editorial Co-Lead
 <div role="doc-subtitle">AMBOSS | 2015 - 2017</div>
 
 - Hire and integrate a completely new team of full- and part-time medical editors working both remote and onsite
