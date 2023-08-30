@@ -2,7 +2,7 @@
 title = "Getting Started with Heist"
 date = "2023-08-30"
 [taxonomies]
-tags=["haskell", "heist_journal"]
+tags=["haskell", "heist-journal"]
 +++
 
 The goal is to have a minimal Haskell project that uses [Heist](http://snapframework.com/docs/tutorials/heist) to render a HTML page that does:
