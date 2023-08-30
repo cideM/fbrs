@@ -5,6 +5,8 @@ date = "2023-08-30"
 tags=["haskell", "heist-journal"]
 +++
 
+## Introduction
+
 The goal is to have a minimal Haskell project that uses [Heist](http://snapframework.com/docs/tutorials/heist) to render a HTML page that does:
 
 1. Load and precompile all templates
@@ -14,6 +16,8 @@ The goal is to have a minimal Haskell project that uses [Heist](http://snapframe
 I will be using compiled Heist where possible. I'd also like to use as few dependencies as possible. I don't want to use `map-syntax` and if I could skip lenses that would be great, although I don't have high hopes for that. Unfortunately lenses are one of those things that many dependencies force upon you.
 
 There's a [resources](#resources) section at the bottom, listing which resources I used to get started.
+
+## Nix Issues
 
 Let's start by initializing the project: `nix flake init -t fbrs#haskell`[^1] followed by `nix flake update`. I'll also add an `.envrc` file `use flake` in it. And now I need to download around 8GB of stuff and probably compile some things, since I'm on an M2 MacBook. I actually updated the flakes in my Nix template repository now so the next time someone uses them there's less downloading and building.
 
@@ -28,6 +32,8 @@ I removed some cruft from the Haskell project files and upgraded the GHC version
 :(
 
 I'm clearly doing something wrong here. I think I should have never used this `ghcWithPackages` since it requires me to recompile a whole lot of stuff and in any case my actual Haskell project files would still use whatever GHC version is currently the default in Nix. To be a bit more precise: the generated `project.nix` is a derivation for my Haskell project. I inherit the Haskell environment in my dev shell through `inputsFrom = [project.env];`. If I now use `(haskell.packages.ghc96.ghcWithPackages (hpkgs: with hpkgs; [ ormolu ]))` in my `buildInputs` for my dev shell I'm setting myself up for confusion since the GHC used in my dev shell won't be the same as the one used by my project. Meaning the Correct Thing To Do™ here is to override the GHC version used in my project and NOT use `ghcWithPackages`. The Haskell tools I'm installing (hlint, fast-tags, ...) will still use whatever GHC version their compiled against, but that's fine.
+
+## Heist
 
 I've removed `ghcWithPackages` from the template and the starter project for Heist. I think now everything is working. In retrospect, I could have probably skipped some 30--45min of compilation had I realized this error earlier.
 I created two `.tpl` files, one for the base template and another for the child template that shows a dynamic variable called `<body-greeting />`. I'm already kind of stuck right now. I should now set up the `load` function from the "Compiled Splices" tutorial, I guess. I really hate lenses. In the snippet below they start with `mempty` and then add stuff to it using lenses. Let me guess, the actual data type isn't exported? I get the idea. They can refactor the internal layout of that data structure and thanks to lenses no one needs to update their code. Using Hoogle `scLoadTimeSplices` leads to `Heist.Internal.Types` so lenses it is. Which lens package do I need though? I vaguely remember there being different generations of lens libraries or library families.
@@ -104,6 +110,52 @@ This is by far the most difficult templating system I have ever encountered in m
 I was able to cobble something together with ChatGPT and Copilot that uses the reader monad for the view data. I precompile my splices when the app starts (goal 1), I can grab the reader monad data at runtime (goal 2) but I still don't know how to bind the `apply-content` tag (goal 3). I'll have to ask on Stack Overflow.
 
 And [here's my SO question](https://stackoverflow.com/questions/77008209/how-to-stick-a-compiled-splice-into-a-tag-using-compiled-heist). This is the first time in my life I need to ask on SO how to do the most basic templating task. It's a typical Haskell journey.
+
+## The Answer
+
+I ended up answering my own question and the answer is embarassingly simple: just use the `<apply />` tag. I thought that in compiled mode these basic template abstractions no longer applied, for some reason.
+
+```diff
+commit 8b65481098811e36a55260fbe812ffdf871672d1
+Author: Florian Beeres <yuuki@protonmail.com>
+Date:   Wed Aug 30 21:53:20 2023 +0200
+
+    Fix it and answer the question
+    
+    Use <apply /> to render the "body" template into the "index" template.
+    Meaning, bottom up, rather than top down.
+
+diff --git a/app/Main.hs b/app/Main.hs
+index b2b4fed..1f0e9d9 100644
+--- a/app/Main.hs
++++ b/app/Main.hs
+@@ -45,15 +45,7 @@ main = do
+       putStrLn $ "Heist init failed: " ++ show err
+     Right heistState -> do
+       -- 3. Apply the precompiled templates to data
+-      -- I need to replace <apply-content /> in index.tpl with the body-greeting splice, but I don't know how.
+-      -- I do not want to add the splice to "mainSplices" since in a server environment I would like to
+-      -- precompile the base splices once and then "add overlays" in each route handler
+-
+-      -- This has <body-greeting /> inside of it, which we've already compiled and handled through "mainSplices"
+-      let (bodyTpl :: C.Splice IO) = C.callTemplate "body"
+-      -- ^-- stick this into the index.tpl template somehow, replacing the <apply-content /> tag
+-
+-      case C.renderTemplate heistState "index" of
++      case C.renderTemplate heistState "body" of
+         Nothing -> do
+           putStrLn "Index not found!"
+         Just (docRuntime, _) -> do
+diff --git a/app/body.tpl b/app/body.tpl
+index 43c72c4..0d128df 100644
+--- a/app/body.tpl
++++ b/app/body.tpl
+@@ -1 +1,3 @@
+-<p><body-greeting /></p>
++<apply template="index">
++  <p><body-greeting /></p>
++</apply>
+```
 
 ## Resources
 
