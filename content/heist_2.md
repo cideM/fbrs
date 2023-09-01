@@ -133,6 +133,6 @@ Recapping:
 
 I took another look at the [Stack Overflow answer](https://stackoverflow.com/questions/8023191/using-values-not-from-the-application-monad-with-heist-templates) here and specifically looked at the source code mentioned in a comment. But that source code seems to reference a Heist version that is practically ancient at this point. I don't think the option mentioned by "mightybyte" is viable anymore.
 
-I updated the example repository at [this commit](https://github.com/cideM/heist_getting_started/tree/ff3cb5d04302b5addfa48bfa8f3a49ac48b92cf9).
+I updated the example repository at [this commit](https://github.com/cideM/heist_getting_started/tree/40d1650337b3468bc247bef9397aa608993adf17).
 
 Next I'll have to figure out which other templating library I can use or if I want to just drop Haskell for this project.
