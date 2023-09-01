@@ -1,5 +1,5 @@
 +++
-title = "Multiple Routes And Compiled Splices"
+title = "Heist Is Too Opinionated For Me"
 date = "2023-08-31"
 [taxonomies]
 tags=["haskell", "heist-journal"]
