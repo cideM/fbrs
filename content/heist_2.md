@@ -13,7 +13,7 @@ I specifically do not want to create some application monad and access it from w
 
 Here's how I imagine this will work in pseudo-code:
 
-```text
+```haskell
 main = do
   data <- fakeDatabaseCall
   heistState <- initHeist { ... }
@@ -64,7 +64,7 @@ instance HasNewsCount ViewB where
 
 Anyway, let's give this a try. First, I need a somewhat more realistic example. I created two views for two routes:
 
-```text
+```xml
 // view_a.tpl
 <apply template="index">
   <person />

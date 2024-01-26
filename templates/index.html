@@ -1,47 +1,66 @@
 {% import "post_with_subtitle.html" as macros %}
 {% extends "base.html" %}
 
+{% block header %} {% endblock header %}
+
 {% block content %}
 
-<section class="index_header page_header">
-  <h1 class="index_title">
-    {{ section.title }}
-  </h1>
-  <div class="index_header_icons">
-    <a href="https://github.com/cideM/" title="GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
-    <a href="https://www.linkedin.com/in/fbrs" title="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
-    <a href="{{ get_url(path="atom.xml", trailing_slash=false) }}" title="RSS"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
-  </div>
-</section>
-
-<nav>
-  <ul>
-    <li><a href="/tags/">tags</a></li>
-    <li><a href="{{ get_url(path="@/about/_index.md", trailing_slash=false) }}">about</a></li>
-    <li><a href="{{ get_url(path="@/resume.md", trailing_slash=false) }}">resume</a></li>
-  </ul>
-</nav>
-
-<section class="other_posts">
-  <h2>Posts published on other blogs</h2>
-  <ul>
-    <li><a href="https://medium.com/amboss/applying-modern-go-concurrency-patterns-to-data-pipelines-b3b5327908d4">Applying Modern Go Concurrency Patterns to Data Pipelines</a> (Sep 20, 2021)</li>
-    <li><a href="https://medium.com/amboss/prefix-trees-in-action-404a6105b6d5">Prefix Trees in Action</a> (Feb 26, 2021)</li>
-  </ul>
-</section>
-
-<ul class="posts_list">
-  {% for page in section.pages %}
-    {% if page.taxonomies %}
-      <div class="tags">
-      {% for k,v in page.taxonomies %}
-        {% for tag in v %}
-        <a href="/tags/{{tag}}"><span class="tag">{{ tag }}</span></a>
-        {% endfor %}
-      {% endfor %}
+<div class="stack-large">
+  <header class="stack-compact">
+    <div class="cluster space-between">
+      <h1>
+        {{ section.title }}
+      </h1>
+      <div class="cluster">
+        <a href="https://github.com/cideM/" title="GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+        <a href="https://www.linkedin.com/in/fbrs" title="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+        <a href="{{ get_url(path="atom.xml", trailing_slash=false) }}" title="RSS"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
       </div>
-    {% endif %}
-    {{ macros::post_with_subtitle(page=page) }}
-  {% endfor %}
-</ul>
+    </div>
+    <nav>
+      <ul class="cluster">
+        <li><a href="/tags/">tags</a></li>
+        <li><a href="{{ get_url(path="@/about/_index.md", trailing_slash=false) }}">about</a></li>
+        <li><a href="{{ get_url(path="@/resume.md", trailing_slash=false) }}">resume</a></li>
+        <li><a href="{{ get_url(path="@/devlog/_index.md", trailing_slash=false) }}">devlog</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="box stack-compact">
+    <h2 class="large">Posts published elsewhere</h2>
+    <ul class="stack-compact">
+      <li>
+        <a href="https://medium.com/amboss/applying-modern-go-concurrency-patterns-to-data-pipelines-b3b5327908d4">Applying Modern Go Concurrency Patterns to Data Pipelines</a>
+        <p>Sep 20, 2021</p>
+      </li>
+      <li>
+        <a href="https://medium.com/amboss/prefix-trees-in-action-404a6105b6d5">Prefix Trees in Action</a>
+        <p>Feb 26, 2021</p>
+      </li>
+    </ul>
+  </section>
+
+  <nav>
+    <ul class="stack-relaxed">
+      {% for page in section.pages %}
+        <li class="stack-compact">
+          <a href="{{ page.permalink | safe }}" class="large"><strong>{{ page.title }}</strong></a>
+          <div class="cluster">
+            <p>{{ page.date | date(format="%B %e, %Y") }}</p>
+            {% if page.taxonomies %}
+            <ul class="cluster">
+              {% for k,v in page.taxonomies %}
+                {% for tag in v %}
+                <li><a href="/tags/{{tag}}">{{ tag }}</a></li>
+                {% endfor %}
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</div>
 {% endblock content %}

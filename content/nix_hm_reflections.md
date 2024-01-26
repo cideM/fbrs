@@ -5,14 +5,6 @@ date = 2023-06-05
 tags=["nix", "home-manager"]
 +++
 
-According to Git, it has been approximately 684 days since I added
-`home.nix` to my MacOS machine. That's nearly two years! Since then,
-I've been utilizing Nix and Home Manager (HM) to manage and synchronize
-both my MacOS and NixOS machines. In this post, I aim to provide a
-summary of my experiences and delve into the highs and lows that I
-recall. Ultimately, I will try to address the question of whether I
-want to use Nix and HM for another two years.
-
 ## Summary
 
 After utilizing Nix and HM to manage both a MacOS and a NixOS

@@ -1,7 +1,6 @@
 +++
-title = "About"
+title = "About Me"
 template =  "about.html"
-date = "2021-10-05"
 +++
 
 Hi, I'm Florian! :wave:
@@ -20,4 +19,4 @@ In case you're wondering, I run NixOS for fun and Darwin for work. I'm also
 learning Japanese, love music like Plini and Blackpink (that's not a typo, nor
 a joke) and have been a video gamer for over 20 years now.
 
-Feel free to contact me at yuuki@protonmail.com
+Feel free to contact me at [yuuki@protonmail.com](yuuki@protonmail.com)

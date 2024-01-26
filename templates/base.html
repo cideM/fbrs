@@ -8,7 +8,13 @@
     <title>FBRS</title>
   </head>
 
-  <body>
-    <section class="section">{% block content %} {% endblock %}</section>
+  <body class="stack-large">
+    {% block header %}
+    <nav>
+      <a href="{{ get_url(path="/", trailing_slash=false) }}">home</a>
+    </nav>
+    {% endblock header %}
+
+    {% block content %} {% endblock %}
   </body>
 </html>

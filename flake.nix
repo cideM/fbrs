@@ -39,6 +39,7 @@
               zola
               imagemagick
               nodePackages.prettier
+              nodejs-slim
             ];
           };
       }

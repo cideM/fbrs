@@ -3,22 +3,27 @@
 
 {% block content %}
 
-<h1 class="page_header">All Available Tags</h1>
+<main class="stack-large">
+  <h1>All Available Tags</h1>
 
-<div class="tag_list">
-{% for term in terms | sort(attribute="pages") | reverse %}
-  <div>
-    <div class="tag_heading">
-      <span class="tag tag--active">{{term.name}}</span>
-      ({{term.pages | length}} post{{ term.pages | length | pluralize }})
-    </div>
-    <ul class="posts_list">
-    {% for page in term.pages %}
-      {{ macros::post_with_subtitle(page=page) }}
-    {% endfor %}
-    </ul>
+  <div class="stack-relaxed">
+  {% for term in terms | sort(attribute="pages") | reverse %}
+    <section class="stack-compact">
+      <header>
+        <h2 class="large">{{term.name}}</h2>
+        <p><strong>{{term.pages | length}} post{{ term.pages | length | pluralize }}</strong></p>
+      </header>
+        <ul class="stack-compact">
+        {% for page in term.pages %}
+          <li>
+            <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+            <p>{{ page.date | date(format="%B %e, %Y") }}</p>
+          </li>
+        {% endfor %}
+        </ul>
+    </section>
+  {% endfor %}
   </div>
-{% endfor %}
-</div>
 
+</main>
 {% endblock content %}

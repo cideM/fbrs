@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="stack-large">
+  <header>
+    <h1>{{ section.title }}</h1>
+  </header>
+
+  <section class="box stack-compact">
+    <h2 class="body"><strong>Introduction</strong></h2>
+    {{ section.content | safe }}
+  </section>
+
+  {% for page in section.pages | sort(attribute='date', reverse=true) %}
+    <article class="stack-relaxed">
+      <header class="stack-zero">
+        <h2 class="large">{{ page.title }}</h2>
+        <p>{{ page.date | date(format="%B %e, %Y") }}</p>
+      </header>
+      {{ page.content | safe }}
+    </article>
+  {% endfor %}
+</main>
+{% endblock content %}

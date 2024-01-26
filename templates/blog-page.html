@@ -1,40 +1,37 @@
-{% extends "base.html" %}
-
+{% extends "base.html" %} 
 {% block content %}
-<article class="post">
+<main>
+  <article>
+    <header>
+      <h1>{{ page.title }}</h1>
+      <p>{{ page.date }}</p>
+    </header>
 
-  <div class="post_header">
-    <h1>
-      {{ page.title }}
-    </h1>
-    <p>{{ page.date }}</p>
-  </div>
-
-  {% if page.toc %}
-  <div class="post_toc">
-    <p>Table of Contents</p>
-    <ul>
-      {% for h1 in page.toc %}
-        <li>
-          <a href="{{h1.permalink | safe}}">{{ h1.title }}</a>
-          {% if h1.children %}
-            <ul>
+    {% if page.toc %}
+    <section class="box">
+      <h2 class="large" id="table-of-contents">Table of Contents</h2>
+      <nav aria-labelledby="table-of-contents">
+        <ol>
+          {% for h1 in page.toc %}
+          <li>
+            <a href="{{h1.permalink | safe}}">{{ h1.title }}</a>
+            {% if h1.children %}
+            <ol>
               {% for h2 in h1.children %}
-                <li>
-                  <a href="{{h2.permalink | safe}}">{{ h2.title }}</a>
-                </li>
+              <li>
+                <a href="{{h2.permalink | safe}}">{{ h2.title }}</a>
+              </li>
               {% endfor %}
-            </ul>
-          {% endif %}
-        </li>
-      {% endfor %}
-    </ul>  
-  </div>
-  {% endif %}
+            </ol>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ol>
+      </nav>
+      {% endif %}
+    </section>
 
-  <div class="post_content">
     {{ page.content | safe }}
-  </div>
-
-</article>
+  </article>
+</main>
 {% endblock content %}
