@@ -15,7 +15,19 @@
     <article class="stack-relaxed">
       <header class="stack-zero">
         <h2 class="large">{{ page.title }}</h2>
-        <p>{{ page.date | date(format="%B %e, %Y") }}</p>
+        <div class="cluster">
+          <p>{{ page.date | date(format="%B %e, %Y") }}</p>
+          {%- if page.taxonomies -%}
+          |<p>tags:</p>
+          <ul class="cluster">
+            {% for k,v in page.taxonomies %}
+              {% for tag in v %}
+              <li><a href="/tags/{{tag}}">{{ tag }}</a></li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
       </header>
       {{ page.content | safe }}
     </article>
