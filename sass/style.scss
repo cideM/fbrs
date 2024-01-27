@@ -104,12 +104,12 @@ p + h1, p + h2, p + h3, p + h4, p + h5, p + h6 {
   margin-block-start: calc(var(--s6) * 2rem) !important;
 }
 
-article :is(h1, h2, h3, h4, h5, h6) + *:is(h1, h2, h3, h4, h5, h6),
-article :is(h1, h2, h3, h4, h5, h6) + *,
-article p + ol,
-article p + ul,
-article * + pre,
-article * + blockquote {
+article > :is(h1, h2, h3, h4, h5, h6) + *:is(h1, h2, h3, h4, h5, h6),
+article > :is(h1, h2, h3, h4, h5, h6) + *,
+article > p + ol,
+article > p + ul,
+article > * + pre,
+article > * + blockquote {
   margin-block-start: calc(var(--s-1) * 1rem);
 }
 
@@ -250,6 +250,11 @@ article ol {
   justify-content: flex-start;
   align-items: center;
   gap: calc(var(--s2) * 0.4ch) calc(var(--s2) * 1ch);
+
+  & > ol, & > ul {
+    list-style-type: none;
+    padding: inherit;
+  }
 }
 
 .wrap-reverse {
