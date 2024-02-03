@@ -1,25 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-<main class="stack-large">
+<main class="stack">
   <header>
     <h1>{{ section.title }}</h1>
   </header>
 
   <section class="box stack-compact">
-    <h2 class="body"><strong>Introduction</strong></h2>
+    <h2 class="body sans uppercase"><strong>Introduction</strong></h2>
     {{ section.content | safe }}
   </section>
 
-  {% for page in section.pages | sort(attribute='date', reverse=true) %}
-    <article class="stack-relaxed">
-      <header class="stack-zero">
-        <h2 class="large">{{ page.title }}</h2>
+  {% for page in section.pages %}
+    <article class="stack stack-small">
+      <header>
+        <p>{{ page.date | date(format="%B %e, %Y") }}</p>
+        <h2 class="h4">{{ page.title }}</h2>
         <div class="cluster">
-          <p>{{ page.date | date(format="%B %e, %Y") }}</p>
           {%- if page.taxonomies -%}
-          |<p>tags:</p>
-          <ul class="cluster">
+          <ul class="cluster list-style-none p0" style="--space: 1ch">
             {% for k,v in page.taxonomies %}
               {% for tag in v %}
               <li><a href="/tags/{{tag}}">{{ tag }}</a></li>

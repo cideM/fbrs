@@ -2,7 +2,6 @@
 title = "My Resume"
 date = "2020-07-27"
 [taxonomies]
-tags=[]
 +++
 
 I'm a physician turned software engineer with over 5 years of experience in

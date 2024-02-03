@@ -3,17 +3,17 @@
 
 {% block content %}
 
-<main class="stack-large">
+<main class="stack">
   <header>
-    <h1>{{term.name}}</h1>
+    <h1 class="h2">{{term.name}}</h1>
     <p>all posts tagged with {{term.name}}</p>
   </header>
 
-  <ul class="stack-compact">
+  <ul class="stack stack-small list-style-none p0">
   {% for page in term.pages %}
     <li>
-      <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
       <p>{{ page.date | date(format="%B %e, %Y") }}</p>
+      <p class="h4"><a class="text-decoration-none body-color" href="{{ page.permalink | safe }}" >{{ page.title }}</a></p>
     </li>
   {% endfor %}
   </ul>

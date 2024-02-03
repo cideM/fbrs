@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<article>
-  <header>
-    <h1>{{ section.title }}</h1>
-  </header>
-  {{ section.content | safe }}
-</article>
+<main>
+  <article class="stack">
+    <header>
+      <h1>{{ section.title }}</h1>
+    </header>
+    <div class="stack stack-small article">
+    {{ section.content | safe }}
+    </div>
+  </article>
+</main>
 {% endblock content %}
