@@ -2,7 +2,7 @@
 title = "Revisiting Haskell"
 date = "2023-08-29"
 [taxonomies]
-tags=["haskell", "heist-journal"]
+tags=["haskell"]
 +++
 
 A while ago I wrote a [blog post](@/fp.md) that summarized my experiences with Haskell, Nix and Purescript. The bottom line is that I wasn't too happy with the mix of technologies since it added a lot of complexity for very little gain.

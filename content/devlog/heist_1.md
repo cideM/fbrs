@@ -2,7 +2,7 @@
 title = "Trying to Get Started With Heist"
 date = "2023-08-30"
 [taxonomies]
-tags=["haskell", "heist-journal"]
+tags=["haskell"]
 +++
 
 ## Introduction
