@@ -251,11 +251,11 @@ ol {
   letter-spacing: 0.2ch;
 }
 
-.text-decoration-none {
+.text-decoration\:none {
   text-decoration: none;
 }
 
-.fw-normal {
+.font-weight\:normal {
   font-weight: normal;
 }
 
@@ -263,12 +263,12 @@ ol {
   font-family: "Helvetica Neue", sans-serif;
 }
 
-.list-style-none {
+.list-style-type\:none {
   list-style-type: none;
 }
 
-.p0 {
-  padding: 0;
+.padding-inline\:0 {
+  padding-inline: 0;
 }
 
 .color-accent {

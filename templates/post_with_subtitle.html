@@ -1,6 +1,0 @@
-{% macro post_with_subtitle(page) %}
-<li>
-  <a href="{{ page.permalink | safe }}"><strong>{{ page.title }}</strong></a>
-  <p class="posts_subtitle">{{ page.date | date(format="%B %e, %Y") }}</p>
-</li>
-{% endmacro post_with_subtitle %}

@@ -1,4 +1,3 @@
-{% import "post_with_subtitle.html" as macros %}
 {% extends "base.html" %}
 
 {% block content %}
@@ -9,11 +8,11 @@
     <p>all posts tagged with {{term.name}}</p>
   </header>
 
-  <ul class="stack stack-small list-style-none p0">
+  <ul class="stack stack-small list-style-type:none padding-inline:0">
   {% for page in term.pages %}
     <li>
       <p>{{ page.date | date(format="%B %e, %Y") }}</p>
-      <p class="h4"><a class="text-decoration-none body-color" href="{{ page.permalink | safe }}" >{{ page.title }}</a></p>
+      <p class="h4"><a class="text-decoration:none body-color" href="{{ page.permalink | safe }}" >{{ page.title }}</a></p>
     </li>
   {% endfor %}
   </ul>
