@@ -2,13 +2,12 @@
 
 {% block content %}
 
-<main class="stack box">
+<main class="stack box transparent">
   <header>
-    <h1 class="h2">{{term.name}}</h1>
-    <p>all posts tagged with {{term.name}}</p>
+    <h1 class="h2 text-align:center">{{term.name}}</h1>
   </header>
 
-  <ul class="stack stack-small list-style-type:none padding-inline:0">
+  <ul class="stack-s list-style-type:none padding-inline:0">
   {% for page in term.pages %}
     <li>
       <p>{{ page.date | date(format="%B %e, %Y") }}</p>

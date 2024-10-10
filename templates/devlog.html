@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-<main class="stack box">
+<main class="stack box transparent">
   <header>
     <h1>{{ section.title }}</h1>
   </header>
 
-  <section class="box invert stack-compact">
-    <h2 class="body">Introduction</h2>
+  <section class="box invert stack-s">
+    <h2 class="h4">Introduction</h2>
     {{ section.content | safe }}
   </section>
 
   {% for page in section.pages %}
-    <article class="stack stack-small">
+    <article class="stack-s">
       <header>
-        <p>{{ page.date | date(format="%B %e, %Y") }}</p>
+        <p class="bold">{{ page.date | date(format="%B %e, %Y") }}</p>
         <h2>{{ page.title }}</h2>
         <div class="cluster">
           {%- if page.taxonomies.tags -%}

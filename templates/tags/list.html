@@ -2,26 +2,24 @@
 
 {% block content %}
 
-<main class="stack box">
-  <h1>All Available Tags</h1>
+<main>
+  <div class="stack">
   {% for term in terms | sort(attribute="pages") | reverse %}
-    <section class="stack stack-small">
-      <header>
-        <h2 class="body">{{term.name}}</h2>
-        <p><b>{{term.pages | length}} post{{ term.pages | length | pluralize }}</b></p>
-      </header>
-        <ul class="stack stack-small list-style-type:none padding-inline:0">
-        {% for page in term.pages %}
-          <li>
-            <p>{{ page.date | date(format="%B %e, %Y") }}</p>
-            <p class="h4"><a class="text-decoration:none body-color" href="{{ page.permalink | safe }}" >{{ page.title }}</a></p>
-          </li>
-        {% endfor %}
-        </ul>
+    <section>
+      <h2 class="box transparent text-align:center">{{term.name}} ({{term.pages | length}} post{{ term.pages | length | pluralize }})</h2>
+      <ul class="list-style-type:none padding-inline:0">
+      {% for page in term.pages %}
+        <li class="box {% if page.extra.external %}invert{% else %}transparent{% endif %}">
+          <p>{{ page.date | date(format="%B %e, %Y") }}</p>
+          <p class="h4"><a class="text-decoration:none body-color" href="{{ page.permalink | safe }}" >{{ page.title }}</a></p>
+        </li>
+      {% endfor %}
+      </ul>
     </section>
     {%- if not loop.last -%}
       <hr>
     {%- endif -%}
   {% endfor %}
+  </div>
 </main>
 {% endblock content %}
