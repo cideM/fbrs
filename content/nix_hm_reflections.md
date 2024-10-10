@@ -2,7 +2,7 @@
 title = "Two Years of Using Nix and Home Manager"
 date = 2023-06-05
 [taxonomies]
-tags=["nix", "home-manager"]
+tags=["Nix", "Home Manager"]
 +++
 
 ## Summary

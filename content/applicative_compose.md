@@ -2,7 +2,7 @@
 title = "The Compose Newtype and its Applicative Instance"
 date = 2019-03-27
 [taxonomies]
-tags=["haskell"]
+tags=["Haskell"]
 +++
 
 When I went through _Haskell From First Principle_ the first time, I struggled with the `Compose` applicative instance, which is part of an exercise in chapter 25. This post will give you a quick overview of the `Compose` data type and then explain how the applicative instance for that type works.

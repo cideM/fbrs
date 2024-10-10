@@ -2,7 +2,7 @@
 title = "Understanding unliftio"
 date = "2019-05-30"
 [taxonomies]
-tags=["haskell"]
+tags=["Haskell"]
 +++
 
 In this post I will go over the source code for [unliftio-core](https://www.stackage.org/package/unliftio-core), more specifically the `MonadUnliftIO` typeclass, found in `Control.Monad.IO.Unlift`. The typeclass is used to power the actual [unliftio](https://www.stackage.org/package/unliftio) library, which is the one you'd use in your applications.

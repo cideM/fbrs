@@ -2,7 +2,7 @@
 title = "Exploring the Dhall configuration language"
 date = "2020-04-28"
 [taxonomies]
-tags=["dhall"]
+tags=["Dhall"]
 +++
 
 Over the last weekend I looked into the [Dhall configuration language](https://dhall-lang.org/). I'm a fan of pure, functional programming in general and the works of [Gabriel Gonzalez](http://www.haskellforall.com/) specifically and so Dhall seemed like something I would like. I'm also not super happy with the way we handle kubernetes configuration files at work through helm, so I'm always looking for alternatives to that.

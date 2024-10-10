@@ -2,7 +2,7 @@
 title = "Building A Website With Haskell And Nix"
 date = "2021-09-23"
 [taxonomies]
-tags=["haskell", "nix", "purescript"]
+tags=["Haskell", "Nix", "PureScript"]
 +++
 
 ## Introduction
