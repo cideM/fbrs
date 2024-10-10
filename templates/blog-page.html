@@ -1,10 +1,10 @@
 {% extends "base.html" %} {% block content %}
 <main>
-  <article class="stack box transparent">
-    <header class="stack">
+  <article class="stack-m box transparent">
+    <header class="stack-m">
       <div class="stack-s">
         <h1>{{ page.title }}</h1>
-        <p class="h4">{{ page.date | date(format="%B %e, %Y") }}</p>
+        <p class="bold">{{ page.date | date(format="%B %e, %Y") }}</p>
       </div>
       {% if page.toc %}
       <section class="box invert stack-s">

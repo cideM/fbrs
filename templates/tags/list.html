@@ -6,12 +6,17 @@
   <div class="stack">
   {% for term in terms | sort(attribute="pages") | reverse %}
     <section>
-      <h2 class="box transparent text-align:center">{{term.name}} ({{term.pages | length}} post{{ term.pages | length | pluralize }})</h2>
+      <h2 class="box transparent">{{term.name}} ({{term.pages | length}} post{{ term.pages | length | pluralize }})</h2>
       <ul class="list-style-type:none padding-inline:0">
       {% for page in term.pages %}
         <li class="box {% if page.extra.external %}invert{% else %}transparent{% endif %}">
+          <p class="h4">
+            <a 
+              class="text-decoration:none body-color"
+              href="{% if page.extra.external %}{{ page.extra.external }}{% else %}{{ page.permalink | safe }}{% endif %}"
+              >{{ page.title }}
+          </p>
           <p>{{ page.date | date(format="%B %e, %Y") }}</p>
-          <p class="h4"><a class="text-decoration:none body-color" href="{{ page.permalink | safe }}" >{{ page.title }}</a></p>
         </li>
       {% endfor %}
       </ul>
