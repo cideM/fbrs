@@ -2,12 +2,12 @@
 
 {% block content %}
 
-<main class="stack">
+<main class="stack box">
   <h1>All Available Tags</h1>
   {% for term in terms | sort(attribute="pages") | reverse %}
     <section class="stack stack-small">
       <header>
-        <h2 class="sans uppercase body">{{term.name}}</h2>
+        <h2 class="body">{{term.name}}</h2>
         <p><b>{{term.pages | length}} post{{ term.pages | length | pluralize }}</b></p>
       </header>
         <ul class="stack stack-small list-style-type:none padding-inline:0">

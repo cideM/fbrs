@@ -2,7 +2,7 @@
 title = "Trying and Failling to Use the 'Heist' Haskell Templating Library"
 date = "2023-08-31"
 [taxonomies]
-tags=["haskell"]
+tags=["Haskell"]
 +++
 
 Yesterday I got my feet wet by rendering a single, measly splice. And at first it didn't look like I'd even accomplish that before the end of the day. Today I want to extend the example by adding more splices that operate on different data. In the [compiled splices tutorial](http://snapframework.com/docs/tutorials/compiled-splices) they have an example that shows how to render a list of persons. But in a real world application with dozens of routes you will have dozens of splices that all require different data. But if all of those compiled splices end up in your Heist state under a single type, would that type end up being the concatentation of all the parameters of all splices? Let's find out.

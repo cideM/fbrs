@@ -2,7 +2,7 @@
 title = "Functional Programming vs. Vanilla Javascript"
 date = "2021-03-09"
 [taxonomies]
-tags=["javascript"]
+tags=["Javascript"]
 +++
 
 I'm a fan of functional programming (FP), especially when it's coupled with a powerful type system as in Haskell. But my day job revolves around Go and Javascript and involves fairly little FP. Unfortuntately the only person I can blame for that is myself! Apparently I'm not doing enough internal lobbying to convince people of the merits of FP.

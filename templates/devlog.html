@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-<main class="stack">
+<main class="stack box">
   <header>
     <h1>{{ section.title }}</h1>
   </header>
 
-  <section class="box stack-compact">
-    <h2 class="body sans uppercase">Introduction</h2>
+  <section class="box invert stack-compact">
+    <h2 class="body">Introduction</h2>
     {{ section.content | safe }}
   </section>
 
@@ -17,12 +17,10 @@
         <p>{{ page.date | date(format="%B %e, %Y") }}</p>
         <h2>{{ page.title }}</h2>
         <div class="cluster">
-          {%- if page.taxonomies -%}
+          {%- if page.taxonomies.tags -%}
           <ul class="cluster list-style-type:none padding-inline:0" style="--space: 1ch">
-            {% for k,v in page.taxonomies %}
-              {% for tag in v %}
-              <li><a href="/tags/{{tag}}">{{ tag }}</a></li>
-              {% endfor %}
+            {% for tag in page.taxonomies.tags %}
+              <li><a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">{{ tag }}</a></li>
             {% endfor %}
           </ul>
           {% endif %}
