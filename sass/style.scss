@@ -106,7 +106,7 @@
 
   --measure: 40rem;
 
-  --font-weight-headings-light: 900;
+  --font-weight-headings-light: 800;
   --font-weight-headings-dark: 700;
 
   --type-scale-ratio: 1.125;
@@ -135,6 +135,7 @@
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
 
+  --font-family-serif: Georgia, serif;
   --font-family-heading: Inter, var(--font-fallback);
   --font-family-body: Inter, var(--font-fallback);
   --font-family-monospace: Menlo, Consolas, Monaco, Liberation Mono,
@@ -374,6 +375,10 @@ body,
 
 .color-accent {
   color: var(--color-accent-fg-normal);
+}
+
+.serif {
+  font-family: var(--font-family-serif);
 }
 
 .bold {

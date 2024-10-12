@@ -2,9 +2,9 @@
 content %}
 
 <div class="stack-xxs">
-  <header class="stack-xs site-header padding-inline:base padding-block:base">
+  <header class="stack-xs site-header padding-inline:base padding-block:xs">
     <div class="cluster space-between">
-      <h1>{{ section.title }}</h1>
+      <h1 class="serif">{{ section.title }}</h1>
       <div class="cluster-xs color-accent" style="--space: 1ch">
         <a href="https://github.com/cideM/" title="GitHub">
           <svg
@@ -67,7 +67,7 @@ content %}
         </a>
       </div>
     </div>
-    <nav class="cluster-s list-style-type:none padding-inline:0" role="list">
+    <nav class="cluster-s small list-style-type:none padding-inline:0" role="list">
       <a
         role="listitem"
         class="body-color"
@@ -96,12 +96,12 @@ content %}
       <li
         class="stack-xxs padding-block:base padding-inline:base {% if page.extra.external %}box invert{% endif %}"
       >
-        <div class="cluster-xs small">
+        <div class="cluster-xs small serif">
           {{ page.date | date(format="%B %e, %Y") }} {% if page.taxonomies.tags
           %}
           <ul class="cluster-xs list-style-type:none padding-inline:0">
             {% for tag in page.taxonomies.tags %}
-            <li class="small">
+            <li>
               <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}"
                 >{{ tag }}</a
               >

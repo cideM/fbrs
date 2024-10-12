@@ -2,10 +2,10 @@
 <main>
   <article class="stack-m padding-inline:base">
 
-    <header class="stack-xs">
+    <header class="stack">
       <div class="stack-xxs">
         <h1>{{ page.title }}</h1>
-        <p>{{ page.date | date(format="%B %e, %Y") }}</p>
+        <p class="serif">{{ page.date | date(format="%B %e, %Y") }}</p>
       </div>
 
       {% if page.toc %}

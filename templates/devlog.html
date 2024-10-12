@@ -15,9 +15,9 @@
   {% for page in section.pages %}
     <article class="stack-s">
       <header class="stack-xxs">
-        <div class="cluster-xs small">
-          {{ page.date | date(format="%B %e, %Y") }} {% if page.taxonomies.tags
-          %}
+        <h2 class="h1">{{ page.title }}</h2>
+        <div class="cluster-xs small serif">
+          {{ page.date | date(format="%B %e, %Y") }} {% if page.taxonomies.tags %}
           <ul class="cluster-xs list-style-type:none padding-inline:0">
             {% for tag in page.taxonomies.tags %}
             <li class="small">
@@ -29,7 +29,6 @@
           </ul>
           {% endif %}
         </div>
-        <h2 class="h1">{{ page.title }}</h2>
       </header>
       {{ page.content | safe }}
     </article>

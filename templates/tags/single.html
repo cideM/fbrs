@@ -15,7 +15,7 @@
         href="{% if page.extra.external %}{{ page.extra.external }}{% else %}{{ page.permalink | safe }}{% endif %}"
         >{{ page.title }}</a
       >
-      <p class="small">{{ page.date | date(format="%B %e, %Y") }}</p>
+      <p class="small serif">{{ page.date | date(format="%B %e, %Y") }}</p>
     </li>
     {% endfor %}
   </ul>
