@@ -10,7 +10,7 @@
     <ul class="stack-s list-style-type:none padding-inline:0">
       {% for page in term.pages %}
       <li
-        class="padding-inline:base {% if page.extra.external %}box invert{% else %}transparent{% endif %}"
+        class="padding-inline:base {% if page.extra.external %}external-post{% else %}transparent{% endif %}"
       >
         <p class="h4">
           <a

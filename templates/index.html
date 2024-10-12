@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block header %} {% endblock header %} {% block
 content %}
 
-<div class="stack-xxs">
+<div class="stack">
   <header class="stack-xs site-header padding-inline:base padding-block:xs">
     <div class="cluster space-between">
       <h1 class="serif">{{ section.title }}</h1>
@@ -91,17 +91,17 @@ content %}
   </header>
 
   <nav>
-    <ul class="list-style-type:none padding-inline:0">
+    <ul class="stack-m list-style-type:none padding-inline:0">
       {% for page in section.pages %}
       <li
-        class="stack-xxs padding-block:base padding-inline:base {% if page.extra.external %}box invert{% endif %}"
+        class="stack-xxs padding-inline:base {% if page.extra.external %}external-post{% endif %}"
       >
         <div class="cluster-xs small serif">
           {{ page.date | date(format="%B %e, %Y") }} {% if page.taxonomies.tags
           %}
           <ul class="cluster-xs list-style-type:none padding-inline:0">
             {% for tag in page.taxonomies.tags %}
-            <li>
+            <li {% if tag == "Published elsewhere" %}class="color:accent"{% endif %}>
               <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}"
                 >{{ tag }}</a
               >
