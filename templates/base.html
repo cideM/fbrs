@@ -2,17 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="preconnect" href="/inter">
+    <link rel="stylesheet" href="/inter/inter.css">
     <link rel="stylesheet" href="/style.css" >
     <link rel="alternate" type="application/atom+xml" title="RSS" href="{{ get_url(path="atom.xml", trailing_slash=false) }}" >
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>FBRS</title>
   </head>
 
-  <body class="center">
+  <body class="center stack">
     {% block header %}
-    <nav class="site-header box cluster space-between">
-      <h1 class="serif h3">fbrs.</h1>
-      <a href="{{ get_url(path="/", trailing_slash=false) }}">home</a>
+    <nav class="site-header cluster padding-inline:base padding-block:xs space-between">
+      <h1 class="h3">fbrs.</h1>
+      <a class="bold uppercase" href="{{ get_url(path="/", trailing_slash=false) }}">home</a>
     </nav>
     {% endblock header %}
 

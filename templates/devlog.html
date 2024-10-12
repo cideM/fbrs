@@ -1,31 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
-<main class="stack-m box transparent">
-  <h1>{{ section.title }}</h1>
+<main class="stack-m padding-inline:base">
+  <div class="stack-xs">
+    <h1>{{ section.title }}</h1>
 
-  <section class="box invert stack-xs">
-    <h2 class="h4">Introduction</h2>
-    {{ section.content | safe }}
-  </section>
+    <section class="box stack-xs">
+      <h2 class="h4">Introduction</h2>
+      {{ section.content | safe }}
+    </section>
+  </div>
 
+  <div class="stack-m">
   {% for page in section.pages %}
     <article class="stack-s">
-      <header class="stack-xs">
-        {%- if page.taxonomies.tags -%}
-        <ul class="cluster list-style-type:none padding-inline:0" style="--space: 1ch">
-          {% for tag in page.taxonomies.tags %}
-            <li class="pill small">
-              <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">{{ tag }}</a>
+      <header class="stack-xxs">
+        <div class="cluster-xs small">
+          {{ page.date | date(format="%B %e, %Y") }} {% if page.taxonomies.tags
+          %}
+          <ul class="cluster-xs list-style-type:none padding-inline:0">
+            {% for tag in page.taxonomies.tags %}
+            <li class="small">
+              <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}"
+                >{{ tag }}</a
+              >
             </li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-        <h2>{{ page.title }}</h2>
-        <p class="bold">{{ page.date | date(format="%B %e, %Y") }}</p>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+        <h2 class="h1">{{ page.title }}</h2>
       </header>
       {{ page.content | safe }}
     </article>
   {% endfor %}
+  </div>
 </main>
 {% endblock content %}

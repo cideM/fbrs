@@ -1,23 +1,23 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
-
-<main class="stack box transparent">
+<main class="stack">
   <header>
-    <h1 class="h2 text-align:center">{{term.name}}</h1>
+    <h2 class="padding-inline:base">{{term.name}}</h2>
   </header>
 
   <ul class="stack-s list-style-type:none padding-inline:0">
-  {% for page in term.pages %}
-    <li>
-      <p class="h4">
-        <a 
-          class="text-decoration:none body-color"
-          href="{% if page.extra.external %}{{ page.extra.external }}{% else %}{{ page.permalink | safe }}{% endif %}" >{{ page.title }}
-      </p>
-      <p>{{ page.date | date(format="%B %e, %Y") }}</p>
+    {% for page in term.pages %}
+    <li
+      class="padding-inline:base {% if page.extra.external %}box invert{% else %}transparent{% endif %}"
+    >
+      <a
+        class="text-decoration:none h4"
+        href="{% if page.extra.external %}{{ page.extra.external }}{% else %}{{ page.permalink | safe }}{% endif %}"
+        >{{ page.title }}</a
+      >
+      <p class="small">{{ page.date | date(format="%B %e, %Y") }}</p>
     </li>
-  {% endfor %}
+    {% endfor %}
   </ul>
 </main>
 

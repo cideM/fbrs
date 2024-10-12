@@ -1,30 +1,31 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
-
-<main>
-  <div class="stack">
+<main class="stack">
   {% for term in terms | sort(attribute="pages") | reverse %}
-    <section>
-      <h2 class="box transparent">{{term.name}} ({{term.pages | length}} post{{ term.pages | length | pluralize }})</h2>
-      <ul class="list-style-type:none padding-inline:0">
+  <section class="stack-s">
+    <h2 class="padding-inline:base">
+      {{term.name}} ({{term.pages | length}} post{{ term.pages | length |
+      pluralize }})
+    </h2>
+    <ul class="stack-s list-style-type:none padding-inline:0">
       {% for page in term.pages %}
-        <li class="box {% if page.extra.external %}invert{% else %}transparent{% endif %}">
-          <p class="h4">
-            <a 
-              class="text-decoration:none body-color"
-              href="{% if page.extra.external %}{{ page.extra.external }}{% else %}{{ page.permalink | safe }}{% endif %}"
-              >{{ page.title }}
-          </p>
-          <p>{{ page.date | date(format="%B %e, %Y") }}</p>
-        </li>
+      <li
+        class="padding-inline:base {% if page.extra.external %}box invert{% else %}transparent{% endif %}"
+      >
+        <p class="h4">
+          <a
+            class="text-decoration:none body-color"
+            href="{% if page.extra.external %}{{ page.extra.external }}{% else %}{{ page.permalink | safe }}{% endif %}"
+            >{{ page.title }}</a
+          >
+        </p>
+        <p class="small">{{ page.date | date(format="%B %e, %Y") }}</p>
+      </li>
       {% endfor %}
-      </ul>
-    </section>
-    {%- if not loop.last -%}
-      <hr>
-    {%- endif -%}
-  {% endfor %}
-  </div>
+    </ul>
+  </section>
+  {%- if not loop.last -%}
+  <hr />
+  {%- endif -%} {% endfor %}
 </main>
 {% endblock content %}

@@ -1,16 +1,18 @@
 {% extends "base.html" %} {% block content %}
 <main>
-  <article class="stack-m box transparent">
-    <header class="stack-m">
-      <div class="stack-xs">
+  <article class="stack-m padding-inline:base">
+
+    <header class="stack-xs">
+      <div class="stack-xxs">
         <h1>{{ page.title }}</h1>
-        <p class="bold">{{ page.date | date(format="%B %e, %Y") }}</p>
+        <p>{{ page.date | date(format="%B %e, %Y") }}</p>
       </div>
+
       {% if page.toc %}
-      <section class="box invert stack-s">
-        <h2 class="body" id="table-of-contents">Table of Contents</h2>
+      <section class="box stack-s">
+        <h2 class="h4" id="table-of-contents">Table of Contents</h2>
         <nav aria-labelledby="table-of-contents">
-          <ol>
+          <ol class="padding-inline:0">
             {% for h1 in page.toc %}
             <li>
               <a class="text-decoration:none" href="{{h1.permalink | safe}}">{{ h1.title }}</a>
@@ -28,10 +30,11 @@
           </ol>
         </nav>
         {% endif %}
+
       </section>
     </header>
 
-    <div class="stack-s article">
+    <div class="stack-xs article">
     {{ page.content | safe }}
     </div>
   </article>

@@ -1,11 +1,11 @@
 {% extends "base.html" %} {% block header %} {% endblock header %} {% block
 content %}
 
-<div class="stack">
-  <header class="stack-xs box site-header">
+<div class="stack-xxs">
+  <header class="stack-xs site-header padding-inline:base padding-block:base">
     <div class="cluster space-between">
-      <h1 class="serif">{{ section.title }}</h1>
-      <div class="cluster color-accent" style="--space: 1ch">
+      <h1>{{ section.title }}</h1>
+      <div class="cluster-xs color-accent" style="--space: 1ch">
         <a href="https://github.com/cideM/" title="GitHub">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -68,56 +68,56 @@ content %}
       </div>
     </div>
     <nav class="cluster-s list-style-type:none padding-inline:0" role="list">
-        <a
-          role="listitem"
-          class="body-color"
-          href="{{ get_url(path='@/about/_index.md', trailing_slash=false) }}"
-          >About Me</a
-        >
-        <span>•</span>
-        <a
-          role="listitem"
-          class="body-color"
-          href="{{ get_url(path='@/resume.md', trailing_slash=false) }}"
-          >Resume</a
-        >
-        <span>•</span>
-        <a 
-          role="listitem"
-          class="body-color" href="/tags/">Posts by Tag</a>
-        <span>•</span>
-        <a
-          class="body-color"
-          role="listitem"
-          href="{{ get_url(path='@/devlog/_index.md', trailing_slash=false) }}"
-          >Devlog</a
-        >
-      </ul>
+      <a
+        role="listitem"
+        class="body-color"
+        href="{{ get_url(path='@/about/_index.md', trailing_slash=false) }}"
+        >About Me</a
+      >
+      <a
+        role="listitem"
+        class="body-color"
+        href="{{ get_url(path='@/resume.md', trailing_slash=false) }}"
+        >Resume</a
+      >
+      <a role="listitem" class="body-color" href="/tags/">Posts by Tag</a>
+      <a
+        class="body-color"
+        role="listitem"
+        href="{{ get_url(path='@/devlog/_index.md', trailing_slash=false) }}"
+        >Devlog</a
+      >
     </nav>
   </header>
 
   <nav>
-    <ul class="stack-s list-style-type:none padding-inline:0">
+    <ul class="stack-xs list-style-type:none padding-inline:0">
       {% for page in section.pages %}
-        <li class="stack-xs box {% if page.extra.external %}invert{% else %}transparent{% endif %}">
-          {% if page.taxonomies.tags %}
-          <ul class="cluster-s list-style-type:none padding-inline:0" >
+      <li
+        class="stack-xxs padding-block:base padding-inline:base {% if page.extra.external %}box invert{% endif %}"
+      >
+        <div class="cluster-xs small">
+          {{ page.date | date(format="%B %e, %Y") }} {% if page.taxonomies.tags
+          %}
+          <ul class="cluster-xs list-style-type:none padding-inline:0">
             {% for tag in page.taxonomies.tags %}
-            <li class="pill small">
-              <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">{{ tag }}</a>
+            <li class="small">
+              <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}"
+                >{{ tag }}</a
+              >
             </li>
             {% endfor %}
           </ul>
           {% endif %}
-          <p class="h3">
-            <a
-              class="text-decoration:none cluster"
-              href="{% if page.extra.external %}{{ page.extra.external }}{% else %}{{ page.permalink | safe }}{% endif %}"
-              >{{ page.title }}
-            </a>
-          </p>
-          <p>{{ page.date | date(format="%B %e, %Y") }}</p>
-        </li>
+        </div>
+        <p class="h2">
+          <a
+            class="text-decoration:none cluster"
+            href="{% if page.extra.external %}{{ page.extra.external }}{% else %}{{ page.permalink | safe }}{% endif %}"
+            >{{ page.title }}
+          </a>
+        </p>
+      </li>
       {% endfor %}
     </ul>
   </nav>
