@@ -6,7 +6,7 @@
   </header>
 
   <ul class="stack-s list-style-type:none padding-inline:0">
-    {% for page in term.pages %}
+    {% for page in term.pages | sort(attribute="date") | reverse %}
     <li
       class="padding-inline:base {% if page.extra.external %}external-post{% else %}transparent{% endif %}"
     >
