@@ -5,6 +5,8 @@ date = "2019-05-30"
 tags=["Haskell"]
 +++
 
+**UPDATE 2025: [Here's an updated gist](https://gist.github.com/cideM/68f0be9aa4e6699a8f71d7ea81ae3490) that uses a Nix shebang for a single, executable `.hs` file that you can run**
+
 In this post I will go over the source code for [unliftio-core](https://www.stackage.org/package/unliftio-core), more specifically the `MonadUnliftIO` typeclass, found in `Control.Monad.IO.Unlift`. The typeclass is used to power the actual [unliftio](https://www.stackage.org/package/unliftio) library, which is the one you'd use in your applications.
 
 Let's start with an example (borrowed from the official docs) showing what `unliftio` is good for.
@@ -29,21 +31,25 @@ But now you have a function where `IO` occurs in negative position[^1] (see this
 
 ```haskell
 foo :: (String ->  IO ()) -> IO ()
-        -- ^^^^^ negative position
+                -- ^^^^^ negative position
 foo func = func "test"
 ```
 
 `liftIO` won't help us, but `unliftIO` can solve this problem.
 
 ```haskell
+foo :: (String ->  IO ()) -> IO ()
+                -- ^^^^^ negative position
+foo func = func "test"
+
 foo2 :: (String -> ReaderT String IO ())
    -> ReaderT String IO ()
 foo2 func =
   askUnliftIO >>=
   \u -> liftIO $ foo (unliftIO u . func)
-        -- ^^^ note that we're still calling
-        -- the original `foo`. We didn't have to
-        -- reimplement anything
+              -- ^^^ note that we're still calling
+              -- the original `foo`. We didn't have to
+              -- reimplement anything
 
 -- Or alternatively and more concisely
 foo2' func =
