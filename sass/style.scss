@@ -110,7 +110,7 @@
   --font-weight-headings-dark: 700;
 
   --type-scale-ratio: 1.125;
-  --type-scale-0: 1.0625rem;
+  --type-scale-0: 1.2rem;
 
   --type-scale--1: calc(var(--type-scale-0) / var(--type-scale-ratio));
   --type-scale-1: calc(var(--type-scale-0) * var(--type-scale-ratio));
@@ -129,17 +129,12 @@
   --line-height-5: 1.2;
   --line-height-6: 1.2;
 
-  font-family: Inter, sans-serif;
+  font-family: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
 
-  --font-family-fallback: BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-
-  --font-family-serif: Georgia, serif;
-  --font-family-heading: Inter, var(--font-fallback);
-  --font-family-body: Inter, var(--font-fallback);
-  --font-family-monospace: Menlo, Consolas, Monaco, Liberation Mono,
-    Lucida Console, monospace;
+  --font-family-serif: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
+  --font-family-heading: var(--font-family);
+  --font-family-body: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
+  --font-family-monospace: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
 
   --space-scale-ratio: var(--line-height-0);
   --space-scale-base: calc(var(--type-scale-0) * var(--line-height-0));
@@ -154,12 +149,6 @@
 
   --border-thickness: 1px;
   --border-radius-round: 4px;
-}
-
-@supports (font-variation-settings: normal) {
-  :root {
-    font-family: InterVariable, sans-serif;
-  }
 }
 
 //  ____  _____ ____  _____ _____
