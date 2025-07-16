@@ -23,6 +23,7 @@ most of my open source efforts now focus on [Nix](https://github.com/NixOS).
 
 ### Tech Lead Content API
 <div role="doc-subtitle">AMBOSS | Since November 2024</div>
+
 - With the rise of AI our content delivery pipeline needed a complete overhaul. I'm leading the Content API part of the initiative as the tech lead of a small team consisting of three developers (including myself). This includes the typical duties you'd expect from such a role: plan project timelines, align with other teams and stake holders, write lots of proof of concepts and Request for Comments documents to scope out the system architecture, and so on.
 - The Content API we're building is a highly generic Go service that uses code generation to generate types, structs and resolvers from our content management system (think of it like Hasura) 
 - One of my highlights so far was creating a library that generates JSON Schema documents from Typescript types
