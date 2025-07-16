@@ -1,6 +1,6 @@
 +++
-title = "My Resume"
-date = "2020-07-27"
+title = "Resume"
+date = "2025-07-16"
 [taxonomies]
 +++
 
@@ -15,11 +15,18 @@ most of my open source efforts now focus on [Nix](https://github.com/NixOS).
 
 ## Skills
 
-- Work with it every day: **Go, Docker, Kubernetes, Javascript, GraphQL**
-- Could jump in and quickly get up to speed: Haskell, Lua, Nix, Typescript
-- Some familiarity: Rust, Clojure, Purescript
+- Work with it every day: **Go, Docker, Kubernetes, Javascript/Typescript, GraphQL**
+- Could jump in and quickly get up to speed: Haskell, Lua, Nix, Janet
+- Some familiarity: Rust, Clojure
 
 ## Experience
+
+### Tech Lead Content API
+<div role="doc-subtitle">AMBOSS | Since November 2024</div>
+- With the rise of AI our content delivery pipeline needed a complete overhaul. I'm leading the Content API part of the initiative as the tech lead of a small team consisting of three developers (including myself). This includes the typical duties you'd expect from such a role: plan project timelines, align with other teams and stake holders, write lots of proof of concepts and Request for Comments documents to scope out the system architecture, and so on.
+- The Content API we're building is a highly generic Go service that uses code generation to generate types, structs and resolvers from our content management system (think of it like Hasura) 
+- One of my highlights so far was creating a library that generates JSON Schema documents from Typescript types
+- Interim Engineering Manager in addition to the tech lead role
 
 ### Senior Software Engineer
 <div role="doc-subtitle">AMBOSS | Since November 2021</div>
