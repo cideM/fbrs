@@ -4,7 +4,7 @@ date = "2025-07-16"
 [taxonomies]
 +++
 
-I'm a physician turned software engineer with over 5 years of experience in
+I'm a physician turned software engineer with over 8 years of experience in
 building scalable web applications. My main area of expertise is back end
 services running in Kubernetes but I feel equally comfortable working on front
 end code or CLI tools. I'm self-taught and extremely driven, and consider
