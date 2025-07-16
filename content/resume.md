@@ -1,6 +1,6 @@
 +++
 title = "Resume"
-date = "2025-07-16"
+date = "2020-07-27"
 [taxonomies]
 +++
 
