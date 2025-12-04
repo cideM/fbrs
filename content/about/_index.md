@@ -10,8 +10,8 @@ online. But that's not the kind of content I want to read online, so why would
 I add to this growing pile of self-marketing bullshit?
 
 The most satisfying posts I've written to date are the ones about
-[`unliftio`](./content/unliftio.md) and
-[`Compose`](./content/applicative_compose.md), because they were both
+[`unliftio`](@/unliftio.md) and
+[`Compose`](@/applicative_compose.md), because they were both
 relatively well researched and I felt confident in what I had to say.
 
 Unfortunately, creating content like that takes more time and effort than I'm
