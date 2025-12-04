@@ -427,6 +427,15 @@ body,
   gap: var(--space-scale-xs);
 }
 
+.cluster-xxs {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: var(--space-scale-xxs);
+}
+
 .cluster-s {
   display: flex;
   flex-direction: row;

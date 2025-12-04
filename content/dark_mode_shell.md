@@ -1,6 +1,6 @@
 +++
-title = "Dark mode for terminal users"
-date = "2024-10-09T19:26:39Z"
+title = "Dark/Light Switching for the Terminal"
+date = 2024-10-09
 [taxonomies]
 tags=["Shell"]
 +++
@@ -14,7 +14,11 @@ For the longest time I've therefore wanted to have the automatic dark/light mode
 I finally got around to spending some time on this not so tricky problem and I'd say I'm 85% there. I use my [own color theme](https://github.com/cideM/yui) which exports config files for, among other things, all three programs listed above. And all config files are available in a dark and a light mode. Meaning, in Neovim I can simply switch to the dark version with `:color yui_dark`. Since Neovim has a nice client/server architecture I can also do this remotely:
 
 ```text
-:let g:lightline.colorscheme = "yui_dark" | colorscheme yui_dark | call lightline#init() | call lightline#colorscheme() | call lightline#update()<CR>
+:let g:lightline.colorscheme = "yui_dark"
+    \ | colorscheme yui_dark
+    \ | call lightline#init()
+    \ | call lightline#colorscheme()
+    \ | call lightline#update()<CR>
 ```
 
 Alacritty also has a nice API for changing config values from the shell. You can read more about it under `man alacritty-msg` (and `man 5 alacritty` for the config values) but the gist is `alacritty msg config -w -1 'colors.cursor.background="#CCCCCC"'`.
@@ -29,5 +33,3 @@ set fish_color_search_match --background=4f4b5f
 ```
 
 In other words: I now have shell commands for remotely changing Alacritty, Fish and Neovim from light to dark mode and vice versa. The "only" thing left to do is to find a way of running either of the two variants when the system switches themes.
-
-

@@ -1,6 +1,7 @@
 +++
 title = "Prefer Higher Order Component for Branching Logic"
 date = "2020-08-09"
+draft = true
 [taxonomies]
 tags=["React", "Javascript"]
 +++

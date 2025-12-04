@@ -1,6 +1,7 @@
 +++
 title = "Resume"
 date = "2020-07-27"
+draft = true
 [taxonomies]
 +++
 
@@ -22,14 +23,16 @@ most of my open source efforts now focus on [Nix](https://github.com/NixOS).
 ## Experience
 
 ### Tech Lead Content API
+
 <div role="doc-subtitle">AMBOSS | Since November 2024</div>
 
 - With the rise of AI our content delivery pipeline needed a complete overhaul. I'm leading the Content API part of the initiative as the tech lead of a small team consisting of three developers (including myself). This includes the typical duties you'd expect from such a role: plan project timelines, align with other teams and stake holders, write lots of proof of concepts and Request for Comments documents to scope out the system architecture, and so on.
-- The Content API we're building is a highly generic Go service that uses code generation to generate types, structs and resolvers from our content management system (think of it like Hasura) 
+- The Content API we're building is a highly generic Go service that uses code generation to generate types, structs and resolvers from our content management system (think of it like Hasura)
 - One of my highlights so far was creating a library that generates JSON Schema documents from Typescript types
 - Interim Engineering Manager in addition to the tech lead role
 
 ### Senior Software Engineer
+
 <div role="doc-subtitle">AMBOSS | Since November 2021</div>
 
 - Go guild lead: establish microservice template, extract code shared across
@@ -44,6 +47,7 @@ most of my open source efforts now focus on [Nix](https://github.com/NixOS).
   work.
 
 ### Fullstack Engineer
+
 <div role="doc-subtitle">AMBOSS | Since 2019</div>
 
 - Build processing pipelines for third-party content in Golang across multiple regions and languages
@@ -55,6 +59,7 @@ most of my open source efforts now focus on [Nix](https://github.com/NixOS).
 - Create a small Typescript application to progressively enhance WebViews on iOS and Android devices
 
 ### Frontend Engineer
+
 <div role="doc-subtitle">AMBOSS | 2018 - 2019</div>
 
 - Build a new single page application for our core product
@@ -63,12 +68,14 @@ most of my open source efforts now focus on [Nix](https://github.com/NixOS).
 - Collaborate closely with designers and product managers to leverage the new single page application to improve our core features
 
 ### Junior Frontend Engineer
+
 <div role="doc-subtitle">AMBOSS | 2017</div>
 
 - Maintain and extend Javascript projects running in various environments (e.g., server-rendered templates, Angular single-page application, web views on mobile)
 - Introduce React components to legacy code
 
 ### US Expansion Editorial Co-Lead
+
 <div role="doc-subtitle">AMBOSS | 2015 - 2017</div>
 
 - Hire and integrate a completely new team of full- and part-time medical editors working both remote and onsite

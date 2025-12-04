@@ -1,6 +1,6 @@
 +++
 title = "Getting a Raspberry Pi 5"
-date = "2025-07-19T20:38:49Z"
+date = 2025-07-19
 [taxonomies]
 tags=["Raspberry Pi"]
 +++
@@ -26,14 +26,14 @@ pluggable SD card reader.
 
 I'm sure the Pi is great, but right now I just want to throw it in the trash.
 
----------
+---
 
 The idea is now to copy the standard Raspberry Pi image onto the SD card and
 boot the Pi from that. Then SSH into it and use the imager tool to install Home
 Assistant onto the SSD card. Finally, change the boot order so the SSD card
 comes first.
 
----------
+---
 
 In the end I couldn't wait for my SD card to arrive. I had to re-assemble my
 old desktop computer anyway, before I could sell it. So I used the NVMe slot on

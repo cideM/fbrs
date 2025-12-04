@@ -1,5 +1,5 @@
 +++
-title = "Functional Programming vs. Vanilla Javascript"
+title = "Ramda vs. Vanilla Javascript"
 date = "2021-03-09"
 [taxonomies]
 tags=["Javascript"]
@@ -135,10 +135,7 @@ const pipe = require("ramda/src/pipe");
 const safeIncrement = pipe(defaultTo(0), inc);
 const safeConcat = (xs) => pipe(defaultTo([]), concat([xs]));
 
-const reducer = (
-  object,
-  { author: { id: currentId }, content, section }
-) => {
+const reducer = (object, { author: { id: currentId }, content, section }) => {
   const lenL = lensPath([section, "len"]);
   const userL = lensPath([section, "data", currentId]);
   const idL = compose(userL, lensProp("id"));
@@ -149,14 +146,11 @@ const reducer = (
     over(lenL, safeIncrement),
     set(idL, currentId),
     over(contentsL, safeConcat(content)),
-    set(headingL, "placeholder")
+    set(headingL, "placeholder"),
   )(object);
 };
 
-const ramdaFn = pipe(
-  reduce(reducer, {}),
-  map(over(lensProp("data"), values))
-);
+const ramdaFn = pipe(reduce(reducer, {}), map(over(lensProp("data"), values)));
 ```
 
 ```javascript
@@ -214,7 +208,7 @@ const merger = (key, left, right) => {
 
 const ramdaFn = pipe(
   transduce(map(mapper), mergeDeepWithKey(merger), {}),
-  map(over(lensProp("data"), values))
+  map(over(lensProp("data"), values)),
 );
 ```
 
@@ -269,7 +263,7 @@ Personally performance is not my primary worry when writing client side Javascri
 
 On the backend side you're even more likely to work with sufficiently large data. Of course, always keep in mind that any network or file I/O might render these micro benchmarks meaningless. If your app is waiting 100ms for a request, it doesn't matter much if your Ramda code is 5ms slower.
 
-My personal conclusion from this admittedly superficial look at performance is that while it doesn't rule out Ramda, it means that Ramda will have to be really convincing in all other comparisons.  
+My personal conclusion from this admittedly superficial look at performance is that while it doesn't rule out Ramda, it means that Ramda will have to be really convincing in all other comparisons.
 
 ### Lines of Code & Dependencies
 
@@ -303,7 +297,7 @@ It's tempting to draw a line between high level and low level coding and define 
 
 In an ideal environment I'd focus only on the logic and leave performance to the compiler. But such an environment does not exist. Therefore I will analyze the snippets both with regards to high level intent and clarity of execution model.
 
-The vanilla version makes it quite clear how many iterations will take place. There's a `forEach` at the start and another at the end. It also calls two `Object` methods, which probably do some iterating as well. You're also not left wondering if there's any deep cloning going on (there isn't). 
+The vanilla version makes it quite clear how many iterations will take place. There's a `forEach` at the start and another at the end. It also calls two `Object` methods, which probably do some iterating as well. You're also not left wondering if there's any deep cloning going on (there isn't).
 
 On the other hand it's not apparent what this code is trying to accomplish. You really need to read it line by line to understand that we're mostly gathering the `content` fields of each input value, by section and author.
 
@@ -324,4 +318,3 @@ For me personally the third snippet is clearly the winner. It's about as concise
 Ramda is much more concise, but also significantly slower than vanilla Javascript in this small example. The conciseness comes from using concepts such as lenses, transducers and higher order functions, which most developers are not familiar with. Careless use of functional programming concepts in a language without special support for that is, in my opinion, more likely to lead to unnecessary CPU usage and memory consumption. Of course you can write slow code in any paradigm, but if the most likely thing you'll do is write a single loop and cram all your functionality in there, you'll be more likely to experience a "pit of success" moment with regards to performance.
 
 Ultimately, I was hoping to answer the question: would FP be my default paradigm in my next JS project? I don't know. I think that you'd need to invest a lot of time and energy into mentoring. You'd also need people curious enough to be mentored. I can guarantee you that some of the FP heavy code will come out needlessly complex and abstract in the beginning. This will lead to push back and endless discussions. I'm not sure if that's really worth it? Maybe it's better to use a language that was built with FP in mind rather than retrofitting it into JS.
-

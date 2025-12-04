@@ -19,7 +19,14 @@ content %}
       {% for page in section.pages %}
       <li class="padding-inline:base" >
         <a class="h3 text-decoration:none" href="{{ page.permalink | safe }}">{{ page.title }}</a>
-        <p class="">{{ page.date | date(format="%B %e, %Y") }}</p>
+        <p>{{ page.date | date(format="%B %e, %Y") }}</p>
+        {% if page.taxonomies.tags %}
+          <ul class="cluster-xxs list-style-type:none padding-inline:0">
+            {% for tag in page.taxonomies.tags %}
+            <li><a class="small" href="{{ get_taxonomy_url(kind='tags', name=tag) }}">{{ tag }}</a></li>
+            {% endfor %}
+          </ul>
+        {% endif %}
       </li>
       {% endfor %}
     </ul>

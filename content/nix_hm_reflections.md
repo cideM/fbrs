@@ -1,5 +1,5 @@
 +++
-title = "Two Years of Using Nix and Home Manager"
+title = "Two Years of Nix & Home Manager"
 date = 2023-06-05
 [taxonomies]
 tags=["Nix", "Home Manager"]
@@ -458,20 +458,23 @@ switch.
 - [Nix direnv](https://github.com/nix-community/nix-direnv)
   - [Nix direnv project shells](https://github.com/nix-community/nix-direnv#flakes-support)
 
-----------------
+---
 
-[^1]: Sometimes you want to install a tool that's not yet packaged up in
+[^1]:
+    Sometimes you want to install a tool that's not yet packaged up in
     your system package manager of choice. In such cases it can be
     tempting to just use something like `npm` or `cargo` to install
     something globally in your system.
 
-[^2]: I really like
+[^2]:
+    I really like
     [`PATH_add`](https://direnv.net/man/direnv-stdlib.1.html#codepathadd-ltpathgtcode)
     to automatically add `./node_modules/.bin/` to your `$PATH` whenever
     you are in a NodeJS project. That way it's trivial to use the
     project-local formatter and linter, and so on.
 
-[^3]: You can manage your developer machine, build applications (kind of
+[^3]:
+    You can manage your developer machine, build applications (kind of
     like Bazel), deploy code to remote machines, define those machines,
     and more.
 

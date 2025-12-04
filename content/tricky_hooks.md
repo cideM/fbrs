@@ -1,6 +1,7 @@
 +++
 title = "React Hooks are Tricky"
 date = "2019-07-15"
+draft = true
 [taxonomies]
 tags=["React", "Javascript"]
 +++
@@ -21,20 +22,20 @@ The components are all very simple. There's a component displaying the current v
 
 ```js
 function SomeChild({ x }) {
-  return <p>Value: {x}</p>
+  return <p>Value: {x}</p>;
 }
 
 function Input({ onChange, id, type, text }) {
   return (
-	<input
-	  type={type}
-	  id={id}
-	  value={text}
-	  onChange={e => {
-		onChange(e.target.value)
-	  }}
-	/>
-  )
+    <input
+      type={type}
+      id={id}
+      value={text}
+      onChange={(e) => {
+        onChange(e.target.value);
+      }}
+    />
+  );
 }
 ```
 
@@ -92,20 +93,20 @@ How can we solve this issue for good? Our requirements are:
 The solution below is more or less a 1:1 copy from Dan Abramov's [overreacted blog](https://overreacted.io/making-setinterval-declarative-with-react-hooks/), where he happened to talk about almost precisely this issue. I just inlined the function rather than creating a custom hook from it.
 
 ```js
-const savedCallback = React.useRef()
+const savedCallback = React.useRef();
 
 React.useEffect(() => {
   savedCallback.current = () => {
-	setTime(time + Number(input))
-  }
-})
+    setTime(time + Number(input));
+  };
+});
 
 React.useEffect(() => {
   let id = setInterval(() => {
-	savedCallback.current()
-  }, 1000)
-  return () => clearInterval(id)
-}, [])
+    savedCallback.current();
+  }, 1000);
+  return () => clearInterval(id);
+}, []);
 ```
 
 The solution here is to store the function called in `setInterval` in a reference, with `useRef`[^2]. The interval is only created once, as can be seen from the empty dependency array. But instead of referring to a function from the first render of `<App />`, we access (and call), the most recent version of that function through the reference. On each render, we simply update that stored function, by reassigning `savedCallback.current` to a new function using the most recent state. We're mutating the reference in place! Even though `useEffect` only runs once, it can access the updated (mutated) function through the reference.
@@ -117,9 +118,9 @@ Fun fact, there's a [tweet](https://twitter.com/dan_abramov/status/1099842565631
 Meaning you can do this:
 
 ```js
-const ref = useState({ current: 0 })[0]
-ref.current = 2
-console.log(ref.current) // 2
+const ref = useState({ current: 0 })[0];
+ref.current = 2;
+console.log(ref.current); // 2
 ```
 
 It's just JS after all. Nothing prevents you from mutating stuff willy nilly.
@@ -131,48 +132,48 @@ What would the timer example look like with class based components?
 ```js
 class App extends React.Component {
   constructor() {
-	super()
-	this.state = {
-	  input: `1`,
-	  count: 0,
-	}
+    super();
+    this.state = {
+      input: `1`,
+      count: 0,
+    };
 
-	this.intervalId = null
+    this.intervalId = null;
   }
 
   increment = () => {
-	this.setState({
-	  count: this.state.count + Number(this.state.input),
-	})
-  }
+    this.setState({
+      count: this.state.count + Number(this.state.input),
+    });
+  };
 
   componentDidMount() {
-	this.intervalId = setInterval(this.increment, 1000)
+    this.intervalId = setInterval(this.increment, 1000);
   }
 
   componentWillUnmount() {
-	clearInterval(this.intervalId)
+    clearInterval(this.intervalId);
   }
 
-  setInput = value => {
-	this.setState({
-	  input: value,
-	})
-  }
+  setInput = (value) => {
+    this.setState({
+      input: value,
+    });
+  };
 
   render() {
-	return (
-	  <main className="App">
-		<Input
-		  id="timer-input"
-		  type="text"
-		  text={this.state.input}
-		  onChange={this.setInput}
-		/>
-		<label htmlFor="timer-input">Enter a number:</label>
-		<SomeChild value={this.state.count} />
-	  </main>
-	)
+    return (
+      <main className="App">
+        <Input
+          id="timer-input"
+          type="text"
+          text={this.state.input}
+          onChange={this.setInput}
+        />
+        <label htmlFor="timer-input">Enter a number:</label>
+        <SomeChild value={this.state.count} />
+      </main>
+    );
   }
 }
 ```
@@ -190,27 +191,24 @@ To demonstrate the problem I created a component that displays the current time.
 
 ```js
 const ClickChild = React.memo(({ onClick }) => {
-  return <div onClick={onClick}>click me. date: {Date.now()}</div>
-})
+  return <div onClick={onClick}>click me. date: {Date.now()}</div>;
+});
 ```
 
 The parent holds a counter, but it doesn't pass the current count down to the child.
 
 ```js
-const [state, setState] = useState(0)
-const increment = useCallback(
-  () => {
-	setState(state + 1)
-  },
-  [state]
-)
+const [state, setState] = useState(0);
+const increment = useCallback(() => {
+  setState(state + 1);
+}, [state]);
 
 return (
   <div>
-	<ClickChild onClick={increment} />
-	state: {state}
+    <ClickChild onClick={increment} />
+    state: {state}
   </div>
-)
+);
 ```
 
 The repl includes both a hooks and a class based version of this component. Click both versions and see that the class based one doesn't update the timestamp, meaning that the child doesn't re-render. In the hooks based version that is unfortunately the case.
@@ -237,7 +235,11 @@ Considering that I've already quoted Dan Abramov numerous times, it only makes s
 > Disclaimer: this post focuses on a pathological case. Even if an API simplifies a hundred use cases, the discussion will always focus on the one that got harder.[^4]
 
 [^1]: Unlike the lifecycle methods, the function passed to `useEffect` runs _after_ layout and paint. https://reactjs.org/docs/hooks-reference.html#timing-of-effects
+
 [^2]: Alternatively you could also store input and value in references, but that would make things pretty unergonomical and would force all users of those values to reach them through `.current`.
+
 [^3]: https://reactjs.org/docs/hooks-faq.html#what-can-i-do-if-my-effect-dependencies-change-too-often
+
 [^4]: Dan Abramov, https://overreacted.io/making-setinterval-declarative-with-react-hooks/
+
 [^5]: Dan Abramov, https://overreacted.io/a-complete-guide-to-useeffect/

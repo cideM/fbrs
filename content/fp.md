@@ -1,5 +1,5 @@
 +++
-title = "Building A Website With Haskell And Nix"
+title = "Building a Website With Haskell & Nix"
 date = "2021-09-23"
 [taxonomies]
 tags=["Haskell", "Nix", "PureScript"]
@@ -14,6 +14,7 @@ management system called Contentful. The most complex part is the members-only
 area, which is the part I rebuilt and what this post is all about.
 
 The members area consists of a handful of routes:
+
 - A news feed where administrators can post new messages. It's plain text with the exception of URLs, which are replaced with proper anchor links. No images.
 - User management area, where administrators can invite new members or edit and delete existing members. Here you can also filter by user groups and send emails to users you select through checkboxes. That's the part where I used progressive enhancement. This route also hooks into email sending functionality for messaging someone who was invited to the site.
 - People can create events, and others can then sign up for these events and also indicate how many guests they bring. Everyone can see who's coming and who declined, how many guests there are in total. Events can also have attachements, such as PDF files, which are stored on the droplet itself.
@@ -29,7 +30,7 @@ local developer experience was a bit lacking at that time. The honest answer is
 that, for quite a long time, I had been looking for a real-world project to
 which I could apply all the fancy functional programming (FP) technologies I
 picked up over the years. I was holding an FP-shaped hammer and I was just
-looking for a suitable nail.  This project seemed perfect, since it's small,
+looking for a suitable nail. This project seemed perfect, since it's small,
 has actual users and even a deadline, but since it's a project for a family
 member there's no money on the line and I could do whatever I wanted in terms
 of tech. And so the idea was born to rewrite the entire website with Haskell,
@@ -543,7 +544,8 @@ tree, what if my app barely had any dependencies?
 
 ---
 
-[^1]: For example, I would strongly recommend to immediately catch potential
+[^1]:
+    For example, I would strongly recommend to immediately catch potential
     exceptions thrown by a function that has `MonadThrow` (if I recall
     correctly), because I've had surprising errors when the exception type was
     not what I thought, because somewhere a function happened to have a

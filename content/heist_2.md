@@ -1,5 +1,5 @@
 +++
-title = "Trying and Failling to Use the 'Heist' Haskell Templating Library"
+title = "Heist: Haskell Templating Woes"
 date = "2023-08-31"
 [taxonomies]
 tags=["Haskell"]
@@ -17,7 +17,7 @@ Here's how I imagine this will work in pseudo-code:
 main = do
   data <- fakeDatabaseCall
   heistState <- initHeist { ... }
-  
+
   let spliceA = genSpliceA (data.someNumber)
   let spliceB = genSpliceB (data.someText)
 
@@ -28,10 +28,12 @@ main = do
 ```
 
 I suspect that merging splices into the Heist state will be a major undertaking. I have no idea how I can modify Heist state. Indeed, the documentation for `initHeist` says this:
+
 > We don't provide functions to add either type of loadtime splices to your HeistState after initHeist because it doesn't make any sense unless you re-initialize all templates with the new splices.
 
 The documentation does mention
->  Heist's HeistState -> HeistState "filter" functions. 
+
+> Heist's HeistState -> HeistState "filter" functions.
 
 but I don't know where they are. They do have a few functions that all work in the `HeistT n m ()` environment, but I don't know how I would use them. I could call `modifyHS` in a splice function, but then I'm once again in a load-time splice function and I want to avoid the whole runtime stuff-everything-into-an-application monad.
 
@@ -48,6 +50,7 @@ return $ toByteString builder
 ```
 
 Notice that they're supplying the data for this view through a simple, hard coded state monad. I could create runtime splices that use a bespoke reader monad and then in my route handlers fill that reader monad with all the data for that route. I suspect that this will hamper re-use though. If you have a splice that needs an int and its used in two different templates that use a different reader monad each, then I can think of two options:
+
 - duplicate the splice
 - make the splice a bit more generic with a type class and then implement that type class for each monad
 
@@ -128,6 +131,7 @@ fooSplice = do
 If you build a few splices like that, all with a different `Has*` constraint, the top level splices list must gather up all those constraints.
 
 Recapping:
+
 - modifying the list of splices after `initHeist` seems hard and not what you're supposed to do
 - any concrete type in a splice will bubble up to the top level splices definition, where you'll be forced to have a type that is the concatenation of all child types
 
