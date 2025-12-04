@@ -1,122 +1,25 @@
 {% extends "base.html" %} {% block header %} {% endblock header %} {% block
 content %}
 
-<div class="stack">
+<div class="stack-s">
   <header class="stack-xs site-header padding-inline:base padding-block:xs">
     <div class="cluster space-between">
       <h1 class="serif">{{ section.title }}</h1>
-      <div class="cluster-xs color-accent" style="--space: 1ch">
-        <a href="https://github.com/cideM/" title="GitHub">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-github"
-          >
-            <path
-              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-            ></path>
-          </svg>
-        </a>
-        <a href="https://www.linkedin.com/in/fbrs" title="LinkedIn">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-linkedin"
-          >
-            <path
-              d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
-            ></path>
-            <rect x="2" y="9" width="4" height="12"></rect>
-            <circle cx="4" cy="4" r="2"></circle>
-          </svg>
-        </a>
-        <a
-          href="{{ get_url(path='atom.xml', trailing_slash=false) }}"
-          title="RSS"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-rss"
-          >
-            <path d="M4 11a9 9 0 0 1 9 9"></path>
-            <path d="M4 4a16 16 0 0 1 16 16"></path>
-            <circle cx="5" cy="19" r="1"></circle>
-          </svg>
-        </a>
-      </div>
+      <nav class="cluster-xs" role="list">
+        <a role="listitem" href="{{ get_url(path='@/about/_index.md', trailing_slash=false) }}">About</a>
+        <a role="listitem" href="/tags/">Tags</a>
+        <a role="listitem" href="https://github.com/cideM/" title="GitHub">GitHub</a>
+        <a role="listitem" href="{{ get_url(path='atom.xml', trailing_slash=false) }}" title="RSS">RSS</a>
+      </nav>
     </div>
-    <nav class="cluster-s small list-style-type:none padding-inline:0" role="list">
-      <a
-        role="listitem"
-        class="body-color"
-        href="{{ get_url(path='@/about/_index.md', trailing_slash=false) }}"
-        >About</a
-      >
-      <a
-        role="listitem"
-        class="body-color"
-        href="{{ get_url(path='@/resume.md', trailing_slash=false) }}"
-        >Resume</a
-      >
-      <a role="listitem" class="body-color" href="/tags/">Tags</a>
-      <a
-        class="body-color"
-        role="listitem"
-        href="{{ get_url(path='@/devlog/_index.md', trailing_slash=false) }}"
-        >Log</a
-      >
-    </nav>
   </header>
 
   <nav>
-    <ul class="stack-m list-style-type:none padding-inline:0">
+    <ul class="stack-s list-style-type:none padding-inline:0">
       {% for page in section.pages %}
-      <li
-        class="stack-xxs padding-inline:base {% if page.extra.external %}external-post{% endif %}"
-      >
-        <div class="cluster-xs small serif">
-          {{ page.date | date(format="%B %e, %Y") }} {% if page.taxonomies.tags
-          %}
-          <ul class="cluster-xs list-style-type:none padding-inline:0">
-            {% for tag in page.taxonomies.tags %}
-            <li {% if tag == "Published elsewhere" %}class="color:accent"{% endif %}>
-              <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}"
-                >{{ tag }}</a
-              >
-            </li>
-            {% endfor %}
-          </ul>
-          {% endif %}
-        </div>
-        <p class="h2">
-          <a
-            class="text-decoration:none cluster"
-            href="{% if page.extra.external %}{{ page.extra.external }}{% else %}{{ page.permalink | safe }}{% endif %}"
-            >{{ page.title }}
-          </a>
-        </p>
+      <li class="padding-inline:base" >
+        <a class="h3 text-decoration:none" href="{{ page.permalink | safe }}">{{ page.title }}</a>
+        <p class="">{{ page.date | date(format="%B %e, %Y") }}</p>
       </li>
       {% endfor %}
     </ul>

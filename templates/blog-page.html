@@ -1,11 +1,19 @@
 {% extends "base.html" %} {% block content %}
 <main>
-  <article class="stack-m padding-inline:base">
-
-    <header class="stack">
-      <div class="stack-xxs">
+  <article class="stack-s padding-inline:base">
+    <header class="stack-s">
+      <div>
         <h1>{{ page.title }}</h1>
-        <p class="serif">{{ page.date | date(format="%B %e, %Y") }}</p>
+        <p class="">{{ page.date | date(format="%B %e, %Y") }}</p>
+        {% if page.taxonomies.tags %}
+        <div class="cluster-xs list-style-type:none">
+            {% for tag in page.taxonomies.tags %}
+            <li>
+              <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}">{{ tag }}</a>
+            </li>
+            {% endfor %}
+        </div>
+        {% endif %}
       </div>
 
       {% if page.toc %}

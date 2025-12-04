@@ -148,7 +148,7 @@
   --base-content-padding-block: var(--space-scale-s);
 
   --border-thickness: 1px;
-  --border-radius-round: 4px;
+  --border-radius: 4px;
 }
 
 //  ____  _____ ____  _____ _____
@@ -295,14 +295,12 @@ a {
 
 code {
   color: inherit;
-  // font-size: var(--type-scale--1);
-  font-size: calc(1em / var(--type-scale-ratio));
-  font-family: var(--font-family-monospace);
+  font-family: inherit;
+  font-size: inherit;
   line-height: inherit;
   padding: 0 0.4ch;
   background: var(--color-layer1-bg);
-  border: var(--border-thickness) var(--color-layer1-border) solid;
-  border-radius: var(--border-radius-round);
+  border-radius: var(--border-radius);
 }
 
 pre {
@@ -315,9 +313,6 @@ pre {
 
   padding-inline: var(--space-scale-xs);
   padding-block: var(--space-scale-xs);
-
-  border: var(--border-thickness) var(--color-layer1-border) solid;
-  border-radius: var(--border-radius-round);
 
   overflow: auto;
 
@@ -357,6 +352,11 @@ body,
   line-height: var(--line-height--1);
 }
 
+.large {
+  font-size: var(--type-scale-3);
+  line-height: var(--line-height-3);
+}
+
 .text-decoration\:none {
   text-decoration: none;
 }
@@ -374,7 +374,7 @@ body,
 }
 
 .bold {
-  font-weight: var(--font-weight-headings-light);
+  font-weight: 500;
 }
 
 .site-header {
@@ -498,7 +498,7 @@ body,
   cursor: pointer;
   padding: 0.05em 0.3em;
   box-sizing: border-box;
-  border-radius: var(--border-radius-round);
+  border-radius: var(--border-radius);
   border: var(--border-thickness) var(--color-layer1-border) solid;
 
   &:hover {
